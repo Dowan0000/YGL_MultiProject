@@ -2,26 +2,40 @@
 
 
 #include "WeaponBase.h"
+#include "Components/BoxComponent.h"
+#include "MainCharacter.h"
 
-// Sets default values
 AWeaponBase::AWeaponBase()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+ 	PrimaryActorTick.bCanEverTick = true;
+
+	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
+	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
+	
+	RootComponent = Mesh;
+	Box->SetupAttachment(RootComponent);
 
 }
 
-// Called when the game starts or when spawned
 void AWeaponBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	Box->OnComponentBeginOverlap.AddDynamic(this, &AWeaponBase::BoxBeginOverlap);
+	Box->OnComponentEndOverlap.AddDynamic(this, &AWeaponBase::BoxEndOverlap);
 }
 
-// Called every frame
 void AWeaponBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
+void AWeaponBase::BoxBeginOverlap_Implementation(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+
+}
+
+void AWeaponBase::BoxEndOverlap_Implementation(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+}

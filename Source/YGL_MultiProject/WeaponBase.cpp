@@ -14,6 +14,8 @@ AWeaponBase::AWeaponBase() :
 {
  	PrimaryActorTick.bCanEverTick = true;
 
+	bReplicates = true;
+
 	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
 	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
 	
@@ -131,6 +133,8 @@ void AWeaponBase::PressGetItem_Implementation()
 
 	if (Character->GetEquipWeapon())
 	{
+		// 이미 가지고있는 아이템 예외처리...
+
 		Character->GetEquipWeapon()->SetItemState(EItemState::EIS_NonEquipped);
 
 		SetItemState(EItemState::EIS_Equipped);

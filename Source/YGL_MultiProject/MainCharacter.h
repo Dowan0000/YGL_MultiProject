@@ -12,18 +12,93 @@ class YGL_MULTIPROJECT_API AMainCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
 	AMainCharacter();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+
+protected:
+	virtual void BeginPlay() override;
+
+	void MoveForward(float Value);
+	void MoveRight(float Value);
+	void LookUp(float Value);
+	void LookRight(float Value);
+
+	void PressShoot();
+	UFUNCTION(Server, Reliable)
+	void ReqPressShoot();
+	UFUNCTION(NetMulticast, Reliable)
+	void ResPressShoot();
+
+	void PressGetItem();
+	UFUNCTION(Server, Reliable)
+	void ReqPressGetItem();
+	UFUNCTION(NetMulticast, Reliable)
+	void ResPressGetItem();
+
+	void SetPistol();
+	void SetRifle();
+	void SetSniper();
+	void SetLauncher();
+
+	void PressDropItem();
+	UFUNCTION(Server, Reliable)
+	void ReqPressDropItem();
+	UFUNCTION(NetMulticast, Reliable)
+	void ResPressDropItem();
+
+	void SetDropInventory();
+
+	UFUNCTION()
+	void OnRep_Health();
+
+private:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	class USpringArmComponent* SpringArm;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	class UCameraComponent* Camera;
+
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
+	class AWeaponBase* EquipWeapon;
+
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
+	AWeaponBase* OverlappingWeapon;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
+	TArray<AWeaponBase*> Inventory;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
+		bool HasPistol;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
+		bool HasRifle;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
+		bool HasSniper;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
+		bool HasLauncher;
+
+	UPROPERTY(ReplicatedUsing = OnRep_Health, EditAnywhere, BlueprintReadOnly, Category = "Health", meta = (AllowPrivateAccess = "true"))
+		float Health;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Health", meta = (AllowPrivateAccess = "true"))
+		float MaxHealth;
+
+public:	
+	FORCEINLINE AWeaponBase* GetEquipWeapon() const { return EquipWeapon; }
+	FORCEINLINE void SetEquipWeapon(AWeaponBase* NewWeapon) { EquipWeapon = NewWeapon; }
+
+	FORCEINLINE void SetOverlappingWeapon(AWeaponBase* NewWeapon) { OverlappingWeapon = NewWeapon; }
+
+	void SetInventory();
+	
+	UFUNCTION(BlueprintNativeEvent)
+	void SetWeaponUI();
 
 };

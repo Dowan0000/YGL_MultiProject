@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
-#include "ItemType.h"
 #include "MainAnimInstance.generated.h"
 
 /**
@@ -31,8 +30,5 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class AMainCharacter* Character;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	EItemType ItemType;
 
 };

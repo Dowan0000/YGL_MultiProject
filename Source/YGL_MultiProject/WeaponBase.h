@@ -31,8 +31,6 @@ protected:
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void PressShoot();
 	virtual void PressShoot_Implementation() override;
-	UFUNCTION(Server, Reliable)
-	void ReqShoot(FVector Start, FVector End);
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void PressGetItem();
@@ -48,24 +46,20 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
 	class AMainCharacter* Character;
 
-	UPROPERTY(Replicated, EditAnywhere, BlueprintReadOnly, Category = "Item")
-	EItemType ItemType;
-
-	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, Category = "Item")
-	EItemState ItemState;
-
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	class UAnimMontage* ShootMontage;
 
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	class UParticleSystem* ShootEffect;
 
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadOnly, Category = "Item")
+	EItemType ItemType;
+
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, Category = "Item")
+	EItemState ItemState;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
 	FName SocketName;
-
-	
-
-	
 
 public:
 	FORCEINLINE EItemType GetItemType() const { return ItemType; }

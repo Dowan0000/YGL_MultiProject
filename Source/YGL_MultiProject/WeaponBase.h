@@ -31,6 +31,8 @@ protected:
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void PressShoot();
 	virtual void PressShoot_Implementation() override;
+	UFUNCTION(Server, Reliable)
+	void ReqShoot(FVector Start, FVector End);
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void PressGetItem();

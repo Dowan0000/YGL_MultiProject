@@ -5,6 +5,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "MainCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "WeaponBase.h"
 
 void UMainAnimInstance::NativeInitializeAnimation()
 {
@@ -30,9 +31,17 @@ void UMainAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		FRotator AimRotation = Character->GetBaseAimRotation();
 		FRotator MovementRotation = UKismetMathLibrary::MakeRotFromX(Character->GetVelocity());
 		Direction = UKismetMathLibrary::NormalizedDeltaRotator(MovementRotation, AimRotation).Yaw;
+		
+		/*FString RotationMesagge = FString::Printf(TEXT("Direction : %f"), Direction);
+		GEngine->AddOnScreenDebugMessage(1, 0.f, FColor::Red, RotationMesagge);*/
+
+		if (Character->GetEquipWeapon())
+		{
+			ItemType = Character->GetEquipWeapon()->GetItemType();
+		}
+		
 	}
 
-	/*FString RotationMesagge = FString::Printf(TEXT("Direction : %f"), Direction);
-	GEngine->AddOnScreenDebugMessage(1, 0.f, FColor::Red, RotationMesagge);*/
+	
 
 }

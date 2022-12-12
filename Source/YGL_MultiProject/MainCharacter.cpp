@@ -26,6 +26,10 @@ void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	for (int i = 0; i < 4; i++)
+	{
+		Inventory.Add(nullptr);
+	}
 }
 
 void AMainCharacter::Tick(float DeltaTime)
@@ -68,6 +72,22 @@ void AMainCharacter::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& Out
 
 	DOREPLIFETIME(AMainCharacter, EquipWeapon);
 	DOREPLIFETIME(AMainCharacter, OverlappingWeapon);
+	DOREPLIFETIME(AMainCharacter, Health);
+}
+
+float AMainCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	float AppliedDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	Health -= AppliedDamage;
+	OnRep_Health();
+
+	return AppliedDamage;
+}
+
+void AMainCharacter::OnRep_Health()
+{
+
 }
 
 void AMainCharacter::MoveForward(float Value)
@@ -148,6 +168,7 @@ void AMainCharacter::ResPressGetItem_Implementation()
 void AMainCharacter::SetPistol()
 {
 	if (EquipWeapon == nullptr) return;
+	if (Inventory[0] == nullptr) return;
 
 	if (Inventory[0]->GetItemType() == EItemType::EIT_Pistol)
 	{
@@ -160,6 +181,7 @@ void AMainCharacter::SetPistol()
 void AMainCharacter::SetRifle()
 {
 	if (EquipWeapon == nullptr) return;
+	if (Inventory[1] == nullptr) return;
 
 	if (Inventory[1]->GetItemType() == EItemType::EIT_Rifle)
 	{
@@ -172,6 +194,7 @@ void AMainCharacter::SetRifle()
 void AMainCharacter::SetSniper()
 {
 	if (EquipWeapon == nullptr) return;
+	if (Inventory[2] == nullptr) return;
 
 	if (Inventory[2]->GetItemType() == EItemType::EIT_Sniper)
 	{
@@ -184,6 +207,7 @@ void AMainCharacter::SetSniper()
 void AMainCharacter::SetLauncher()
 {
 	if (EquipWeapon == nullptr) return;
+	if (Inventory[3] == nullptr) return;
 
 	if (Inventory[3]->GetItemType() == EItemType::EIT_Launcher)
 	{
@@ -215,6 +239,7 @@ void AMainCharacter::ResPressDropItem_Implementation()
 	EquipWeapon->SetOwner(nullptr);
 	SetDropInventory();
 	Inventory[0]->SetItemState(EItemState::EIS_Equipped);
+	EquipWeapon = Inventory[0];
 	SetWeaponUI();
 }
 

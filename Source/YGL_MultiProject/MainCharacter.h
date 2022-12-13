@@ -43,6 +43,11 @@ protected:
 	void SetSniper();
 	void SetLauncher();
 
+	UFUNCTION(Server, Reliable)
+	void ReqChangeItem(int ItemNum);
+	UFUNCTION(NetMulticast, Reliable)
+	void ResChangeItem(int ItemNum);
+
 	void PressDropItem();
 	UFUNCTION(Server, Reliable)
 	void ReqPressDropItem();

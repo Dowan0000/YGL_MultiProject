@@ -54,4 +54,8 @@ private:
 	float CrosshairIsShoot;
 	float CrosshairCrouch = 0.f;
 
+public:
+	UFUNCTION(BlueprintNativeEvent)
+	void SetHealth(float Health, float MaxHealth);
+
 };

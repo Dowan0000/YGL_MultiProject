@@ -8,6 +8,7 @@
 #include "WeaponInterface.h"
 #include "Net/UnrealNetwork.h"
 #include "EnemyFSM.h"
+#include "MainHUD.h"
 
 AMainCharacter::AMainCharacter() : 
 	HasPistol(false), HasRifle(false),
@@ -90,7 +91,11 @@ float AMainCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 
 void AMainCharacter::OnRep_Health()
 {
-
+	AMainHUD* HUD = Cast<AMainHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+	if (HUD)
+	{
+		HUD->SetHealth(Health, MaxHealth);
+	}
 }
 
 void AMainCharacter::MoveForward(float Value)

@@ -150,3 +150,8 @@ void AMainHUD::DrawCrossHair(UTexture2D* Texture, float XAxis, float YAxis)
 	DrawTexture(Texture, TextureDrawPoint.X, TextureDrawPoint.Y,
 		TextureWidth, TextureHeight, 0.f, 0.f, 1.f, 1.f);
 }
+
+void AMainHUD::SetHealth_Implementation(float Health, float MaxHealth)
+{
+
+}

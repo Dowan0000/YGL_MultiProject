@@ -61,6 +61,14 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
 	FName SocketName;
 
+	// 인벤토리 아이템 배경
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Inventory, meta = (AllowPrivateAccess = "true"))
+	UTexture2D* IconBackground;
+
+	// 무기 아이콘
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Inventory, meta = (AllowPrivateAccess = "true"))
+	UTexture2D* IconWeapon;
+
 public:
 	FORCEINLINE EItemType GetItemType() const { return ItemType; }
 	

@@ -148,49 +148,46 @@ void AMainCharacter::ResPressGetItem_Implementation()
 void AMainCharacter::SetPistol()
 {
 	if (EquipWeapon == nullptr) return;
+	if (Inventory[0] == nullptr) return;
 
-	if (Inventory[0]->GetItemType() == EItemType::EIT_Pistol)
-	{
-		EquipWeapon->SetItemState(EItemState::EIS_NonEquipped);
-		Inventory[0]->SetItemState(EItemState::EIS_Equipped);
-		EquipWeapon = Inventory[0];
-	}
+	ReqChangeItem(0);
 }
 
 void AMainCharacter::SetRifle()
 {
 	if (EquipWeapon == nullptr) return;
+	if (Inventory[1] == nullptr) return;
 
-	if (Inventory[1]->GetItemType() == EItemType::EIT_Rifle)
-	{
-		EquipWeapon->SetItemState(EItemState::EIS_NonEquipped);
-		Inventory[1]->SetItemState(EItemState::EIS_Equipped);
-		EquipWeapon = Inventory[1];
-	}
+	ReqChangeItem(1);
 }
 
 void AMainCharacter::SetSniper()
 {
 	if (EquipWeapon == nullptr) return;
+	if (Inventory[2] == nullptr) return;
 
-	if (Inventory[2]->GetItemType() == EItemType::EIT_Sniper)
-	{
-		EquipWeapon->SetItemState(EItemState::EIS_NonEquipped);
-		Inventory[2]->SetItemState(EItemState::EIS_Equipped);
-		EquipWeapon = Inventory[2];
-	}
+	ReqChangeItem(2);
 }
 
 void AMainCharacter::SetLauncher()
 {
 	if (EquipWeapon == nullptr) return;
+	if (Inventory[3] == nullptr) return;
 
-	if (Inventory[3]->GetItemType() == EItemType::EIT_Launcher)
-	{
-		EquipWeapon->SetItemState(EItemState::EIS_NonEquipped);
-		Inventory[3]->SetItemState(EItemState::EIS_Equipped);
-		EquipWeapon = Inventory[3];
-	}
+	ReqChangeItem(3);
+}
+
+void AMainCharacter::ReqChangeItem_Implementation(int ItemNum)
+{
+	ResChangeItem(ItemNum);
+}
+
+void AMainCharacter::ResChangeItem_Implementation(int ItemNum)
+{
+	EquipWeapon->SetItemState(EItemState::EIS_NonEquipped);
+	Inventory[ItemNum]->SetItemState(EItemState::EIS_Equipped);
+	EquipWeapon = Inventory[ItemNum];
+
 }
 
 void AMainCharacter::PressDropItem()

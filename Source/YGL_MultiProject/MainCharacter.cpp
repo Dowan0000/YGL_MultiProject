@@ -7,6 +7,7 @@
 #include "WeaponBase.h"
 #include "WeaponInterface.h"
 #include "Net/UnrealNetwork.h"
+#include "EnemyFSM.h"
 
 AMainCharacter::AMainCharacter()
 {
@@ -122,6 +123,34 @@ void AMainCharacter::ResPressShoot_Implementation()
 		{
 			Interface->Execute_PressShoot(EquipWeapon);
 		}
+
+		/*FVector startPos = tpsCamComp->GetComponentLocation();
+		FVector endPos = tpsCamComp->GetComponentLocation() + (tpsCamComp->GetForwardVector() * 5000);
+		FHitResult hitInfo;
+		FCollisionQueryParams params;
+		params.AddIgnoredActor(me);
+		bool bHit = GetWorld()->LineTraceSingleByChannel(hitInfo, startPos, endPos, ECC_Visibility, params);
+
+		if (bHit)
+		{
+			FTransform bullletTrans;
+			bullletTrans.SetLocation(hitInfo.ImpactPoint);
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), bulletEffectfactory, bullletTrans);
+
+			auto hitComp = hitInfo.GetComponent();
+			if (hitComp && hitComp->IsSimulatingPhysics())
+			{
+				FVector force = -hitInfo.ImpactNormal * hitComp->GetMass() * 500000;
+				hitComp->AddForce(force);
+			}
+
+			auto enemy = hitInfo.GetActor()->GetDefaultSubobjectByName(TEXT("FSM"));
+			if (enemy)
+			{
+				auto enemyFSM = Cast<UEnemyFSM>(enemy);
+				enemyFSM->OnDamageProcess();
+			}*/
+
 	}
 }
 

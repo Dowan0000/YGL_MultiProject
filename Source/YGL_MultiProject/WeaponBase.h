@@ -7,7 +7,19 @@
 #include "WeaponInterface.h"
 #include "ItemType.h"
 #include "ItemState.h"
+#include "Engine/DataTable.h"
 #include "WeaponBase.generated.h"
+
+USTRUCT(BlueprintType)
+struct FST_Weapon : public FTableRowBase
+{
+	GENERATED_BODY()
+
+public:
+	FST_Weapon()
+	{}
+
+};
 
 UCLASS()
 class YGL_MULTIPROJECT_API AWeaponBase : public AActor, public IWeaponInterface

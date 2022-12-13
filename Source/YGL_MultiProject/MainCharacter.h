@@ -24,7 +24,7 @@ protected:
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 	void LookUp(float Value);
-	void LookRight(float Value);
+	void Turn(float Value);
 
 	void PressShoot();
 	UFUNCTION(Server, Reliable)

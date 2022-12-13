@@ -26,6 +26,9 @@ void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	for (int i = 0; i < 4; i++)
+		Inventory.Add(nullptr);
+	
 }
 
 void AMainCharacter::Tick(float DeltaTime)
@@ -41,7 +44,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &AMainCharacter::MoveForward);
 	PlayerInputComponent->BindAxis(TEXT("MoveRight"), this, &AMainCharacter::MoveRight);
 	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &AMainCharacter::LookUp);
-	PlayerInputComponent->BindAxis(TEXT("LookRight"), this, &AMainCharacter::LookRight);
+	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AMainCharacter::Turn);
 	
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &ACharacter::Jump);
 
@@ -95,7 +98,7 @@ void AMainCharacter::LookUp(float Value)
 	AddControllerPitchInput(Value);
 }
 
-void AMainCharacter::LookRight(float Value)
+void AMainCharacter::Turn(float Value)
 {
 	AddControllerYawInput(Value);
 }

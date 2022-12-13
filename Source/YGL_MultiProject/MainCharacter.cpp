@@ -9,7 +9,10 @@
 #include "Net/UnrealNetwork.h"
 #include "EnemyFSM.h"
 
-AMainCharacter::AMainCharacter()
+AMainCharacter::AMainCharacter() : 
+	HasPistol(false), HasRifle(false),
+	HasSniper(false), HasLauncher(false),
+	Health(100.f), MaxHealth(100.f)
 {
  	PrimaryActorTick.bCanEverTick = true;
 
@@ -72,6 +75,22 @@ void AMainCharacter::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& Out
 
 	DOREPLIFETIME(AMainCharacter, EquipWeapon);
 	DOREPLIFETIME(AMainCharacter, OverlappingWeapon);
+	DOREPLIFETIME(AMainCharacter, Health);
+}
+
+float AMainCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	float AppliedDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	Health -= AppliedDamage;
+	OnRep_Health();
+
+	return AppliedDamage;
+}
+
+void AMainCharacter::OnRep_Health()
+{
+
 }
 
 void AMainCharacter::MoveForward(float Value)
@@ -244,6 +263,7 @@ void AMainCharacter::ResPressDropItem_Implementation()
 	EquipWeapon->SetOwner(nullptr);
 	SetDropInventory();
 	Inventory[0]->SetItemState(EItemState::EIS_Equipped);
+	EquipWeapon = Inventory[0];
 	SetWeaponUI();
 }
 

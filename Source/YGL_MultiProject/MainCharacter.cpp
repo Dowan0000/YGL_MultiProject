@@ -9,11 +9,13 @@
 #include "Net/UnrealNetwork.h"
 #include "EnemyFSM.h"
 #include "MainHUD.h"
+#include "Blueprint/UserWidget.h"
 
 AMainCharacter::AMainCharacter() : 
 	HasPistol(false), HasRifle(false),
 	HasSniper(false), HasLauncher(false),
-	Health(100.f), MaxHealth(100.f)
+	Health(100.f), MaxHealth(100.f),
+	ZoomControlValue(1.f)
 {
  	PrimaryActorTick.bCanEverTick = true;
 
@@ -67,6 +69,10 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 	// DropItem
 	PlayerInputComponent->BindAction(TEXT("DropItem"), EInputEvent::IE_Pressed, this, &AMainCharacter::PressDropItem);
+
+	// Zoom
+	PlayerInputComponent->BindAction(TEXT("Zoom"), EInputEvent::IE_Pressed, this, &AMainCharacter::PressZoom);
+	PlayerInputComponent->BindAction(TEXT("Zoom"), EInputEvent::IE_Pressed, this, &AMainCharacter::ReleasedZoom);
 
 }
 
@@ -295,6 +301,38 @@ void AMainCharacter::SetDropInventory()
 	{
 		Inventory[3] = nullptr;
 		HasLauncher = false;
+	}
+}
+
+void AMainCharacter::PressZoom()
+{
+	if (EquipWeapon && EquipWeapon->GetItemType() == EItemType::EIT_Sniper)
+	{
+		if (ZoomWidgetClass)
+		{
+			ZoomWidget = CreateWidget<UUserWidget>(GetWorld(), ZoomWidgetClass);
+			if (ZoomWidget)
+			{
+				ZoomWidget->AddToViewport();
+
+				SpringArm->TargetArmLength = -4000.f;
+				ZoomControlValue = 0.2f; // zoom 마우스 감도
+			}
+		}
+	}
+}
+
+void AMainCharacter::ReleasedZoom()
+{
+	if (EquipWeapon && EquipWeapon->GetItemType() == EItemType::EIT_Sniper)
+	{
+		if (ZoomWidgetClass && ZoomWidget)
+		{
+			ZoomWidget->RemoveFromParent();
+
+			SpringArm->TargetArmLength = 150.f;
+			ZoomControlValue = 1.f;
+		}
 	}
 }
 

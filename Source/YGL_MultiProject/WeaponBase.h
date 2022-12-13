@@ -7,19 +7,8 @@
 #include "WeaponInterface.h"
 #include "ItemType.h"
 #include "ItemState.h"
-#include "Engine/DataTable.h"
+#include "FST_Weapon.h"
 #include "WeaponBase.generated.h"
-
-USTRUCT(BlueprintType)
-struct FST_Weapon : public FTableRowBase
-{
-	GENERATED_BODY()
-
-public:
-	FST_Weapon()
-	{}
-
-};
 
 UCLASS()
 class YGL_MULTIPROJECT_API AWeaponBase : public AActor, public IWeaponInterface
@@ -43,10 +32,21 @@ protected:
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void PressShoot();
 	virtual void PressShoot_Implementation() override;
+	UFUNCTION(Server, Reliable)
+	void ReqShoot(FVector Start, FVector End);
+	UFUNCTION(NetMulticast, Reliable)
+	void ShootEffectSound();
+	UFUNCTION(NetMulticast, Reliable)
+	void HitEffectSound(FVector Location);
+
+	// crosshair
+	void CanShootTimer();
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void PressGetItem();
 	virtual void PressGetItem_Implementation() override;
+
+	
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
@@ -58,12 +58,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
 	class AMainCharacter* Character;
 
-	UPROPERTY(Replicated, EditAnywhere, BlueprintReadOnly, Category = "Combat")
-	class UAnimMontage* ShootMontage;
-
-	UPROPERTY(Replicated, EditAnywhere, BlueprintReadOnly, Category = "Combat")
-	class UParticleSystem* ShootEffect;
-
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadOnly, Category = "Item")
 	EItemType ItemType;
 
@@ -71,7 +65,10 @@ protected:
 	EItemState ItemState;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
-	FName SocketName;
+	FName HandSocket;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
+	FName MuzzleSocket;
 
 	// 인벤토리 아이템 배경
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Inventory, meta = (AllowPrivateAccess = "true"))
@@ -81,11 +78,26 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Inventory, meta = (AllowPrivateAccess = "true"))
 	UTexture2D* IconWeapon;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UDataTable* WeaponTable;
+
+	FST_Weapon* WeaponData;
+
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite)
+	FName RowName;
+
+	// crosshair
+	bool bIsShoot;
+
+	FTimerHandle ShootTimer;
+
 public:
 	FORCEINLINE EItemType GetItemType() const { return ItemType; }
 	
 	void SetItemType(EItemType NewItemType) { ItemType = NewItemType; }
 
 	void SetItemState(EItemState NewItemState);
+
+	FORCEINLINE bool GetbIsShoot() const { return bIsShoot; }
 
 };

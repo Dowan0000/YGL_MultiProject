@@ -43,8 +43,6 @@ protected:
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void PressShoot();
 	virtual void PressShoot_Implementation() override;
-	UFUNCTION(Server, Reliable)
-	void ReqShoot(FVector Start, FVector End);
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void PressGetItem();
@@ -60,24 +58,28 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
 	class AMainCharacter* Character;
 
-	UPROPERTY(Replicated, EditAnywhere, BlueprintReadOnly, Category = "Item")
-	EItemType ItemType;
-
-	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, Category = "Item")
-	EItemState ItemState;
-
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	class UAnimMontage* ShootMontage;
 
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	class UParticleSystem* ShootEffect;
 
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadOnly, Category = "Item")
+	EItemType ItemType;
+
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, Category = "Item")
+	EItemState ItemState;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
 	FName SocketName;
 
-	
+	// 인벤토리 아이템 배경
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Inventory, meta = (AllowPrivateAccess = "true"))
+	UTexture2D* IconBackground;
 
-	
+	// 무기 아이콘
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Inventory, meta = (AllowPrivateAccess = "true"))
+	UTexture2D* IconWeapon;
 
 public:
 	FORCEINLINE EItemType GetItemType() const { return ItemType; }

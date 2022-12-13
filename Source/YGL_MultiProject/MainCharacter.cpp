@@ -8,10 +8,7 @@
 #include "WeaponInterface.h"
 #include "Net/UnrealNetwork.h"
 
-AMainCharacter::AMainCharacter() : 
-	HasPistol(false), HasRifle(false),
-	HasSniper(false), HasLauncher(false),
-	Health(100.f), MaxHealth(100.f)
+AMainCharacter::AMainCharacter()
 {
  	PrimaryActorTick.bCanEverTick = true;
 
@@ -29,10 +26,6 @@ void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	for (int i = 0; i < 4; i++)
-	{
-		Inventory.Add(nullptr);
-	}
 }
 
 void AMainCharacter::Tick(float DeltaTime)
@@ -75,22 +68,6 @@ void AMainCharacter::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& Out
 
 	DOREPLIFETIME(AMainCharacter, EquipWeapon);
 	DOREPLIFETIME(AMainCharacter, OverlappingWeapon);
-	DOREPLIFETIME(AMainCharacter, Health);
-}
-
-float AMainCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
-{
-	float AppliedDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-
-	Health -= AppliedDamage;
-	OnRep_Health();
-
-	return AppliedDamage;
-}
-
-void AMainCharacter::OnRep_Health()
-{
-
 }
 
 void AMainCharacter::MoveForward(float Value)
@@ -171,46 +148,49 @@ void AMainCharacter::ResPressGetItem_Implementation()
 void AMainCharacter::SetPistol()
 {
 	if (EquipWeapon == nullptr) return;
-	if (Inventory[0] == nullptr) return;
 
-	ReqChangeItem(0);
+	if (Inventory[0]->GetItemType() == EItemType::EIT_Pistol)
+	{
+		EquipWeapon->SetItemState(EItemState::EIS_NonEquipped);
+		Inventory[0]->SetItemState(EItemState::EIS_Equipped);
+		EquipWeapon = Inventory[0];
+	}
 }
 
 void AMainCharacter::SetRifle()
 {
 	if (EquipWeapon == nullptr) return;
-	if (Inventory[1] == nullptr) return;
 
-	ReqChangeItem(1);
+	if (Inventory[1]->GetItemType() == EItemType::EIT_Rifle)
+	{
+		EquipWeapon->SetItemState(EItemState::EIS_NonEquipped);
+		Inventory[1]->SetItemState(EItemState::EIS_Equipped);
+		EquipWeapon = Inventory[1];
+	}
 }
 
 void AMainCharacter::SetSniper()
 {
 	if (EquipWeapon == nullptr) return;
-	if (Inventory[2] == nullptr) return;
 
-	ReqChangeItem(2);
+	if (Inventory[2]->GetItemType() == EItemType::EIT_Sniper)
+	{
+		EquipWeapon->SetItemState(EItemState::EIS_NonEquipped);
+		Inventory[2]->SetItemState(EItemState::EIS_Equipped);
+		EquipWeapon = Inventory[2];
+	}
 }
 
 void AMainCharacter::SetLauncher()
 {
 	if (EquipWeapon == nullptr) return;
-	if (Inventory[3] == nullptr) return;
 
-	ReqChangeItem(3);
-}
-
-void AMainCharacter::ReqChangeItem_Implementation(int ItemNum)
-{
-	ResChangeItem(ItemNum);
-}
-
-void AMainCharacter::ResChangeItem_Implementation(int ItemNum)
-{
-	EquipWeapon->SetItemState(EItemState::EIS_NonEquipped);
-	Inventory[ItemNum]->SetItemState(EItemState::EIS_Equipped);
-	EquipWeapon = Inventory[ItemNum];
-	
+	if (Inventory[3]->GetItemType() == EItemType::EIT_Launcher)
+	{
+		EquipWeapon->SetItemState(EItemState::EIS_NonEquipped);
+		Inventory[3]->SetItemState(EItemState::EIS_Equipped);
+		EquipWeapon = Inventory[3];
+	}
 }
 
 void AMainCharacter::PressDropItem()
@@ -235,7 +215,6 @@ void AMainCharacter::ResPressDropItem_Implementation()
 	EquipWeapon->SetOwner(nullptr);
 	SetDropInventory();
 	Inventory[0]->SetItemState(EItemState::EIS_Equipped);
-	EquipWeapon = Inventory[0];
 	SetWeaponUI();
 }
 

@@ -16,6 +16,7 @@ AMainCharacter::AMainCharacter() :
 	HasSniper(false), HasLauncher(false),
 	Health(100.f), MaxHealth(100.f),
 	ZoomControlValue(1.f)
+
 {
  	PrimaryActorTick.bCanEverTick = true;
 
@@ -57,6 +58,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 	// Shoot
 	PlayerInputComponent->BindAction(TEXT("Shoot"), EInputEvent::IE_Pressed, this, &AMainCharacter::PressShoot);
+	PlayerInputComponent->BindAction(TEXT("Shoot"), EInputEvent::IE_Released, this, &AMainCharacter::ReleaseShoot);
 
 	// GetItem
 	PlayerInputComponent->BindAction(TEXT("GetItem"), EInputEvent::IE_Pressed, this, &AMainCharacter::PressGetItem);
@@ -72,7 +74,11 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 	// Zoom
 	PlayerInputComponent->BindAction(TEXT("Zoom"), EInputEvent::IE_Pressed, this, &AMainCharacter::PressZoom);
-	PlayerInputComponent->BindAction(TEXT("Zoom"), EInputEvent::IE_Pressed, this, &AMainCharacter::ReleasedZoom);
+	PlayerInputComponent->BindAction(TEXT("Zoom"), EInputEvent::IE_Released, this, &AMainCharacter::ReleasedZoom);
+
+	// Crouch
+	PlayerInputComponent->BindAction(TEXT("Crouch"), EInputEvent::IE_Pressed, this, &AMainCharacter::PressCrouch);
+	PlayerInputComponent->BindAction(TEXT("Crouch"), EInputEvent::IE_Released, this, &AMainCharacter::ReleaseCrouch);
 
 }
 
@@ -97,10 +103,12 @@ float AMainCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 
 void AMainCharacter::OnRep_Health()
 {
-	AMainHUD* HUD = Cast<AMainHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+	if(HUD == nullptr)
+		HUD = Cast<AMainHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+	
 	if (HUD)
 	{
-		HUD->SetHealth(Health, MaxHealth);
+		HUD->SetHealth();
 	}
 }
 
@@ -126,17 +134,30 @@ void AMainCharacter::MoveRight(float Value)
 
 void AMainCharacter::LookUp(float Value)
 {
-	AddControllerPitchInput(Value);
+	AddControllerPitchInput(Value * ZoomControlValue);
 }
 
 void AMainCharacter::Turn(float Value)
 {
-	AddControllerYawInput(Value);
+	AddControllerYawInput(Value * ZoomControlValue);
 }
 
 void AMainCharacter::PressShoot()
 {
+	if (EquipWeapon)
+	{
+		EquipWeapon->SetPressShoot(true);
+	}
+
 	ReqPressShoot();
+}
+
+void AMainCharacter::ReleaseShoot()
+{
+	if (EquipWeapon)
+	{
+		EquipWeapon->SetPressShoot(false);
+	}
 }
 
 void AMainCharacter::ReqPressShoot_Implementation()
@@ -316,7 +337,7 @@ void AMainCharacter::PressZoom()
 				ZoomWidget->AddToViewport();
 
 				SpringArm->TargetArmLength = -4000.f;
-				ZoomControlValue = 0.2f; // zoom 마우스 감도
+				ZoomControlValue = 0.1f; // zoom 마우스 감도
 			}
 		}
 	}
@@ -334,6 +355,27 @@ void AMainCharacter::ReleasedZoom()
 			ZoomControlValue = 1.f;
 		}
 	}
+}
+
+void AMainCharacter::PressCrouch()
+{
+	ReqCrouch(true);
+}
+
+void AMainCharacter::ReleaseCrouch()
+{
+	ReqCrouch(false);
+}
+
+void AMainCharacter::ReqCrouch_Implementation(bool bIsCrouch)
+{
+	ResCrouch(bIsCrouch);
+}
+
+void AMainCharacter::ResCrouch_Implementation(bool bIsCrouch)
+{
+	if (bIsCrouch) Crouch();
+	else UnCrouch();
 }
 
 void AMainCharacter::SetInventory()
@@ -362,7 +404,13 @@ void AMainCharacter::SetInventory()
 	}
 }
 
-void AMainCharacter::SetWeaponUI_Implementation()
+void AMainCharacter::SetWeaponUI()
 {
+	if (HUD == nullptr)
+		HUD = Cast<AMainHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
 
+	if (HUD)
+	{
+		HUD->SetWeaponUI();
+	}
 }

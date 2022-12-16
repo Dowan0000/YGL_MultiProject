@@ -34,6 +34,7 @@ protected:
 	virtual void PressShoot_Implementation() override;
 	UFUNCTION(Server, Reliable)
 	void ReqShoot(FVector Start, FVector End);
+
 	UFUNCTION(NetMulticast, Reliable)
 	void ShootEffectSound();
 	UFUNCTION(NetMulticast, Reliable)
@@ -47,7 +48,6 @@ protected:
 	virtual void PressGetItem_Implementation() override;
 
 	
-
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
 	class UBoxComponent* Box;
@@ -91,6 +91,12 @@ protected:
 
 	FTimerHandle ShootTimer;
 
+	UPROPERTY(VisibleAnywhere, Category = "Shoot")
+		bool bPressShoot;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+	float Damage;
+
 public:
 	FORCEINLINE EItemType GetItemType() const { return ItemType; }
 	
@@ -99,5 +105,7 @@ public:
 	void SetItemState(EItemState NewItemState);
 
 	FORCEINLINE bool GetbIsShoot() const { return bIsShoot; }
+
+	FORCEINLINE void SetPressShoot(bool NewPress) { bPressShoot = NewPress; }
 
 };

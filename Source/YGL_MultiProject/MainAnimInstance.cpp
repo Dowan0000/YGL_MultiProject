@@ -37,6 +37,7 @@ void UMainAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 			ItemType = Character->GetEquipWeapon()->GetItemType();
 		}
 		
+		IsCrouch = Character->bIsCrouched;
 	}
 
 	/*FString RotationMesagge = FString::Printf(TEXT("Direction : %f"), Direction);

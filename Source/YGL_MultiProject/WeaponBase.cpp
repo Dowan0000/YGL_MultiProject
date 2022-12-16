@@ -11,9 +11,11 @@
 
 AWeaponBase::AWeaponBase() : 
 	HandSocket("Pistol_Socket"), MuzzleSocket("MuzzleFlash"),
-	RowName("1")
+	RowName("1"), Damage(10.f)
 {
  	PrimaryActorTick.bCanEverTick = true;
+
+	bReplicates = true;
 
 	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
 	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
@@ -59,8 +61,6 @@ void AWeaponBase::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLif
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	/*DOREPLIFETIME(AWeaponBase, ShootMontage);
-	DOREPLIFETIME(AWeaponBase, ShootEffect);*/
 	DOREPLIFETIME(AWeaponBase, ItemType);
 	DOREPLIFETIME(AWeaponBase, ItemState);
 	DOREPLIFETIME(AWeaponBase, RowName);
@@ -100,7 +100,7 @@ void AWeaponBase::PressShoot_Implementation()
 
 	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
 	if (PlayerController != Character->GetController()) return;
-	
+
 	if (Character)
 	{
 		UGameplayStatics::DeprojectScreenToWorld(
@@ -121,21 +121,47 @@ void AWeaponBase::ReqShoot_Implementation(FVector Start, FVector End)
 	Params.AddIgnoredActor(this);
 	Params.AddIgnoredActor(GetOwner());
 
+	UE_LOG(LogTemp, Warning, TEXT("LineTrace"));
 	bool bResult = GetWorld()->LineTraceSingleByChannel(Hit, Start, End,
 		ECollisionChannel::ECC_Camera, Params);
 
 	ShootEffectSound();
 
-	if (!bResult) return;
-
-	if (Hit.Actor.IsValid())
+	if (bResult)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Hit.Actor.IsValid : %s"), *Hit.Actor->GetName());
-		FDamageEvent Damage;
-		Hit.Actor->TakeDamage(10.f, Damage,
-			Character->GetController(), this);
-		
 		HitEffectSound(Hit.Location);
+
+		if (Hit.Actor.IsValid())
+		{
+			// °°ÀºÆÀ °ø°Ýx
+			AMainCharacter* HitActor = Cast<AMainCharacter>(Hit.Actor);
+			if (HitActor == nullptr) return;
+			
+			if (Character->GetTeam() == HitActor->GetTeam()) return;
+				
+
+			FDamageEvent DamageEvent;
+			if (Hit.BoneName.ToString() == "head")
+			{
+				Hit.Actor->TakeDamage(Damage * 2.f, DamageEvent,
+					Character->GetController(), this);
+			}
+			else if (Hit.BoneName.ToString() == "pelvis" ||
+				Hit.BoneName.ToString() == "spine_01" ||
+				Hit.BoneName.ToString() == "spine_02" ||
+				Hit.BoneName.ToString() == "spine_03")
+			{
+				Hit.Actor->TakeDamage(Damage * 1.5f, DamageEvent,
+					Character->GetController(), this);
+			}
+			else
+			{
+				Hit.Actor->TakeDamage(Damage, DamageEvent,
+					Character->GetController(), this);
+			}
+
+			UE_LOG(LogTemp, Warning, TEXT("Hit.BoneName : %s"), *Hit.BoneName.ToString());
+		}
 	}
 
 	bIsShoot = true;
@@ -173,6 +199,7 @@ void AWeaponBase::HitEffectSound_Implementation(FVector Location)
 {
 	if (WeaponData->HitEffect && WeaponData->HitSound)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("HitEffect,Sound"));
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(),
 			WeaponData->HitEffect, Location);
 		UGameplayStatics::SpawnSoundAtLocation(GetWorld(),

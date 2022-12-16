@@ -21,6 +21,8 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+	void CastCharacter();
+
 	void CheckWeaponState();
 
 	void SetCrossHairState(ECrossHair NewCrossHair);
@@ -28,10 +30,21 @@ protected:
 	void DrawCrossHair(UTexture2D* Texture, float XAxis, float YAxis);
 
 private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class UUserWidget> HUDWidgetClass;
+
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UUserWidget* HUDWidget;
+
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class AMainCharacter* Character;
 
-		// Crosshair
+	FTimerHandle CastTimer;
+
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	float CurHealth;
+
+	// Crosshair
 	UPROPERTY(EditAnywhere, Category = "Crosshair", meta = (AllowPrivateAccess = "true"))
 	class UTexture2D* CrossHairCenter;
 	
@@ -56,6 +69,9 @@ private:
 
 public:
 	UFUNCTION(BlueprintNativeEvent)
-	void SetHealth(float Health, float MaxHealth);
+	void SetHealth();
+
+	UFUNCTION(BlueprintNativeEvent)
+	void SetWeaponUI();
 
 };

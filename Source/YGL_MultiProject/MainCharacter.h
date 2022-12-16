@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Team.h"
 #include "MainCharacter.generated.h"
 
 UCLASS()
@@ -34,6 +35,8 @@ protected:
 	UFUNCTION(NetMulticast, Reliable)
 	void ResPressShoot();
 
+	void ReleaseShoot();
+
 	void PressGetItem();
 	UFUNCTION(Server, Reliable)
 	void ReqPressGetItem();
@@ -63,6 +66,14 @@ protected:
 
 	void PressZoom();
 	void ReleasedZoom();
+
+	void PressCrouch();
+	void ReleaseCrouch();
+	UFUNCTION(Server, Reliable)
+	void ReqCrouch(bool bIsCrouch);
+	UFUNCTION(NetMulticast, Reliable)
+	void ResCrouch(bool bIsCrouch);
+
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
@@ -107,6 +118,13 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Zoom", meta = (AllowPrivateAccess = "true"))
 		float ZoomControlValue;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "HUD", meta = (AllowPrivateAccess = "true"))
+	class AMainHUD* HUD;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Team", meta = (ExposeOnSpawn = "true"), meta = (AllowPrivateAccess = "true"))
+	ETeam Team;
+
 public:	
 	FORCEINLINE AWeaponBase* GetEquipWeapon() const { return EquipWeapon; }
 	FORCEINLINE void SetEquipWeapon(AWeaponBase* NewWeapon) { EquipWeapon = NewWeapon; }
@@ -115,7 +133,8 @@ public:
 
 	void SetInventory();
 	
-	UFUNCTION(BlueprintNativeEvent)
 	void SetWeaponUI();
+
+	FORCEINLINE ETeam GetTeam() const { return Team; }
 
 };

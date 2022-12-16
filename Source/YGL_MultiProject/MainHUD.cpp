@@ -2,6 +2,7 @@
 
 
 #include "MainHUD.h"
+#include "Blueprint/UserWidget.h"
 #include "MainCharacter.h"
 #include "WeaponBase.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -16,6 +17,29 @@ void AMainHUD::DrawHUD()
 
 void AMainHUD::BeginPlay()
 {
+	if (HUDWidgetClass)
+	{
+		HUDWidget = CreateWidget<UUserWidget>(GetWorld(), HUDWidgetClass);
+		if (HUDWidget)
+		{
+			HUDWidget->AddToViewport();
+		}
+	}
+
+	CastCharacter();
+}
+
+void AMainHUD::CastCharacter()
+{
+	Character = Cast<AMainCharacter>(GetWorld()->GetFirstPlayerController()->GetCharacter());
+	if (Character)
+	{
+		return;
+	}
+	else
+	{
+		GetWorldTimerManager().SetTimer(CastTimer, this, &AMainHUD::CastCharacter, 0.1f);
+	}
 }
 
 void AMainHUD::CheckWeaponState()
@@ -151,7 +175,12 @@ void AMainHUD::DrawCrossHair(UTexture2D* Texture, float XAxis, float YAxis)
 		TextureWidth, TextureHeight, 0.f, 0.f, 1.f, 1.f);
 }
 
-void AMainHUD::SetHealth_Implementation(float Health, float MaxHealth)
+void AMainHUD::SetHealth_Implementation()
+{
+
+}
+
+void AMainHUD::SetWeaponUI_Implementation()
 {
 
 }

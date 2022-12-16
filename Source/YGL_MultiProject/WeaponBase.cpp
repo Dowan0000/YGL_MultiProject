@@ -127,6 +127,12 @@ void AWeaponBase::ReqShoot_Implementation(FVector Start, FVector End)
 
 	ShootEffectSound();
 
+	bIsShoot = true;
+	GetWorldTimerManager().SetTimer(ShootTimer, this,
+		&AWeaponBase::CanShootTimer, 0.2f);
+
+	DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 5.f);
+
 	if (bResult)
 	{
 		HitEffectSound(Hit.Location);
@@ -163,12 +169,6 @@ void AWeaponBase::ReqShoot_Implementation(FVector Start, FVector End)
 			UE_LOG(LogTemp, Warning, TEXT("Hit.BoneName : %s"), *Hit.BoneName.ToString());
 		}
 	}
-
-	bIsShoot = true;
-	GetWorldTimerManager().SetTimer(ShootTimer, this,
-		&AWeaponBase::CanShootTimer, 0.2f);
-
-	DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 5.f);
 }
 
 void AWeaponBase::ShootEffectSound_Implementation()

@@ -36,6 +36,7 @@ void AMainHUD::CastCharacter()
 	Character = Cast<AMainCharacter>(GetWorld()->GetFirstPlayerController()->GetCharacter());
 	if (Character)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Cast Character in HUD"));
 		return;
 	}
 	else

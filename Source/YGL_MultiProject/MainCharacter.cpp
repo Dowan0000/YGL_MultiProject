@@ -271,6 +271,7 @@ void AMainCharacter::ResChangeItem_Implementation(int ItemNum)
 	Inventory[ItemNum]->SetItemState(EItemState::EIS_Equipped);
 	EquipWeapon = Inventory[ItemNum];
 
+	SetWeaponUI();
 }
 
 void AMainCharacter::PressDropItem()

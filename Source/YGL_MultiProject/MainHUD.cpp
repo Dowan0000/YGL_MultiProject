@@ -26,6 +26,8 @@ void AMainHUD::BeginPlay()
 		}
 	}
 
+	UE_LOG(LogTemp, Warning, TEXT("HUD BeginPlay"));
+
 	CastCharacter();
 }
 

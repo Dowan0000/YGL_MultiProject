@@ -64,6 +64,12 @@ protected:
 	UFUNCTION()
 	void OnRep_Health();
 
+	void IsDead();
+	UFUNCTION(Server, Reliable)
+	void ReqIsDead();
+	UFUNCTION(NetMulticast, Reliable)
+	void ResIsDead();
+
 	void PressZoom();
 	void ReleasedZoom();
 

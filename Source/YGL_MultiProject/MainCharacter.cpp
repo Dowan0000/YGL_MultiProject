@@ -10,6 +10,10 @@
 #include "EnemyFSM.h"
 #include "MainHUD.h"
 #include "Blueprint/UserWidget.h"
+#include "MainAnimInstance.h"
+#include "MainGameModeBase.h"
+#include "MainPlayerController.h"
+#include "Components/CapsuleComponent.h"
 
 AMainCharacter::AMainCharacter() : 
 	HasPistol(false), HasRifle(false),
@@ -96,6 +100,12 @@ float AMainCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 	float AppliedDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
 	Health -= AppliedDamage;
+	if (Health <= 0)
+	{
+		Health = 0;
+		IsDead();
+	}
+
 	OnRep_Health();
 
 	return AppliedDamage;
@@ -109,6 +119,33 @@ void AMainCharacter::OnRep_Health()
 	if (HUD)
 	{
 		HUD->SetHealth();
+	}
+}
+
+void AMainCharacter::IsDead()
+{
+	ReqIsDead();
+}
+
+void AMainCharacter::ReqIsDead_Implementation()
+{
+	ResIsDead();
+}
+
+void AMainCharacter::ResIsDead_Implementation()
+{
+	UMainAnimInstance* Anim = Cast<UMainAnimInstance>(GetMesh()->GetAnimInstance());
+	if (Anim)
+	{
+		Anim->IsDead();
+	}
+
+	AMainPlayerController* MainPC = Cast<AMainPlayerController>(GetController());
+	if (MainPC)
+	{
+		MainPC->IsDead(this);
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
 }
 

@@ -44,3 +44,8 @@ void UMainAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	GEngine->AddOnScreenDebugMessage(1, 0.f, FColor::Red, RotationMesagge);*/
 
 }
+
+void UMainAnimInstance::IsDead()
+{
+	bIsDead = true;
+}

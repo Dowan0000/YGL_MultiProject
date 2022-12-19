@@ -65,7 +65,7 @@ private:
 
 	float CrosshairInAir;
 	float CrosshairIsShoot;
-	float CrosshairCrouch = 0.f;
+	float CrosshairCrouch;
 
 public:
 	UFUNCTION(BlueprintNativeEvent)
@@ -73,5 +73,8 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent)
 	void SetWeaponUI();
+
+	UFUNCTION(BlueprintNativeEvent)
+	void DrawHUDTime(int Seconds);
 
 };

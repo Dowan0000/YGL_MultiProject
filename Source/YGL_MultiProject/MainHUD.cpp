@@ -114,15 +114,14 @@ void AMainHUD::SetCrossHairState(ECrossHair NewCrossHair)
 	}
 	
 	// Crosshair When Crouch
-
-	/*if (Character->GetbIsCrouch())
+	if (Character->bIsCrouched)
 	{
 		CrosshairCrouch = FMath::FInterpTo(CrosshairCrouch, 5.f, UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 10.f);
 	}
 	else
 	{
-		CrosshairCrouch = FMath::FInterpTo(CrosshairCrouch, 0.f, UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 10.f);
-	}*/
+		CrosshairCrouch = FMath::FInterpTo(CrosshairCrouch, 0.f, UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 5.f);
+	}
 
 	float DrawCrossHairXAxis;
 	float DrawCrossHairYAxis;
@@ -184,6 +183,11 @@ void AMainHUD::SetHealth_Implementation()
 }
 
 void AMainHUD::SetWeaponUI_Implementation()
+{
+
+}
+
+void AMainHUD::DrawHUDTime_Implementation(int Seconds)
 {
 
 }

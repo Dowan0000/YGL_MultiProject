@@ -26,10 +26,4 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	USoundBase* HitSound;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
-		int Ammo;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
-		int MaxAmmo;
 };

@@ -21,5 +21,5 @@ protected:
 	virtual void PressShoot_Implementation() override;
 
 	void CanShootTimer();
-
+	
 };

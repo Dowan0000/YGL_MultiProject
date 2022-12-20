@@ -20,8 +20,10 @@ public:
 protected:
 	virtual void PressShoot_Implementation() override;
 
-	UFUNCTION(BlueprintNativeEvent)
 	void PressShootTimer();
+
+	UFUNCTION(BlueprintNativeEvent)
+	void CameraShake();
 
 	FTimerHandle ShootTimer;
 };

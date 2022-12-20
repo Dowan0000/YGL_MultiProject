@@ -14,11 +14,17 @@ void ARifle::PressShoot_Implementation()
 	Super::PressShoot_Implementation();
 
 	UE_LOG(LogTemp, Warning, TEXT("RifleShoot"));
+	CameraShake();
+
 	GetWorldTimerManager().SetTimer(ShootTimer, this,
 		&ARifle::PressShootTimer, 0.2f);
 }
 
-void ARifle::PressShootTimer_Implementation()
+void ARifle::CameraShake_Implementation()
+{
+}
+
+void ARifle::PressShootTimer()
 {
 	if (bPressShoot)
 		PressShoot_Implementation();

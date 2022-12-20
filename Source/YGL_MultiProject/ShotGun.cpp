@@ -5,9 +5,11 @@
 #include "MainCharacter.h"
 #include "Engine/SkeletalMeshSocket.h"
 #include "DrawDebugHelpers.h"
+#include "Components/ArrowComponent.h"
 
 AShotGun::AShotGun()
 {
+	
 }
 
 void AShotGun::PressShoot_Implementation()
@@ -29,12 +31,11 @@ void AShotGun::PressShoot_Implementation()
 		UE_LOG(LogTemp, Warning, TEXT("LineTrace"));
 		bool bResult = GetWorld()->SweepMultiByChannel(Hit, 
 			SocketTransform.GetLocation(), 
-			SocketTransform.GetLocation(),
+			SocketTransform.GetLocation() + Character->GetActorForwardVector() * 500.f,
 			FQuat::Identity, 
 			ECollisionChannel::ECC_GameTraceChannel1,
-			FCollisionShape::MakeSphere(200.f),
+			FCollisionShape::MakeSphere(300.f),
 			Params);
-
 
 		ShootEffectSound();
 
@@ -42,6 +43,9 @@ void AShotGun::PressShoot_Implementation()
 		GetWorldTimerManager().SetTimer(ShootTimer, this,
 			&AShotGun::CanShootTimer, 0.5f);
 
+		DrawDebugLine(GetWorld(), SocketTransform.GetLocation(),
+			SocketTransform.GetLocation() + Character->GetActorForwardVector() * 500.f,
+			FColor::Red, false, 10.f);
 
 		if (bResult)
 		{

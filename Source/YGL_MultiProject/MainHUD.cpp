@@ -105,12 +105,10 @@ void AMainHUD::SetCrossHairState(ECrossHair NewCrossHair)
 	if (Character->GetEquipWeapon()->GetbIsShoot())
 	{
 		CrosshairIsShoot = FMath::FInterpTo(CrosshairIsShoot, 10.f, UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 10.f);
-
 	}
 	else
 	{
 		CrosshairIsShoot = FMath::FInterpTo(CrosshairIsShoot, 0.f, UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 5.f);
-		
 	}
 	
 	// Crosshair When Crouch

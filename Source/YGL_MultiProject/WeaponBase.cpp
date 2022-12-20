@@ -108,6 +108,10 @@ void AWeaponBase::PressShoot_Implementation()
 	FVector Start = WorldPosition;
 	FVector End = WorldPosition + WorldDirection * 50'000.f;
 
+	bIsShoot = true;
+	GetWorldTimerManager().SetTimer(ShootTimer, this,
+		&AWeaponBase::CanShootTimer, 0.2f);
+
 	ReqShoot(Start, End);
 }
 
@@ -123,10 +127,6 @@ void AWeaponBase::ReqShoot_Implementation(FVector Start, FVector End)
 		ECollisionChannel::ECC_Camera, Params);
 
 	ShootEffectSound();
-
-	bIsShoot = true;
-	GetWorldTimerManager().SetTimer(ShootTimer, this,
-		&AWeaponBase::CanShootTimer, 0.2f);
 
 	DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 5.f);
 

@@ -19,7 +19,12 @@ AMainCharacter::AMainCharacter() :
 	HasPistol(false), HasRifle(false),
 	HasSniper(false), HasLauncher(false),
 	Health(100.f), MaxHealth(100.f),
-	ZoomControlValue(1.f)
+	ZoomControlValue(1.f),
+	StartingPistolAmmo(12),
+	StartingRifleAmmo(30),
+	StartingSniperAmmo(7)
+
+
 
 {
  	PrimaryActorTick.bCanEverTick = true;
@@ -41,7 +46,23 @@ void AMainCharacter::BeginPlay()
 	for (int i = 0; i < 4; i++)
 		Inventory.Add(nullptr);
 	
+	void InitializeAmmoMap();
+
 }
+
+void AMainCharacter::InitializeAmmoMap()
+{
+	AmmoMap.Add(EAmmoType::EAT_PistolAmmo, StartingPistolAmmo);
+	AmmoMap.Add(EAmmoType::EAT_RifleAmmo, StartingRifleAmmo);
+}
+
+bool AMainCharacter::WeaponHasAmmo()
+{
+	if (EquipWeapon == nullptr) return false;
+
+	return EquipWeapon->GetAmmo() > 0;
+}
+
 
 void AMainCharacter::Tick(float DeltaTime)
 {
@@ -93,6 +114,7 @@ void AMainCharacter::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& Out
 	DOREPLIFETIME(AMainCharacter, EquipWeapon);
 	DOREPLIFETIME(AMainCharacter, OverlappingWeapon);
 	DOREPLIFETIME(AMainCharacter, Health);
+	DOREPLIFETIME(AMainCharacter, Inventory);
 }
 
 float AMainCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)

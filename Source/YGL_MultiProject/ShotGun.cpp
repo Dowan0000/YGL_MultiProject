@@ -9,7 +9,8 @@
 
 AShotGun::AShotGun()
 {
-	
+	ItemType = EItemType::EIT_Launcher;
+	HandSocket = FName("Launcher_Socket");
 }
 
 void AShotGun::PressShoot_Implementation()
@@ -60,9 +61,15 @@ void AShotGun::PressShoot_Implementation()
 			}
 		}
 	}
+
+	CameraShake();
 }
 
 void AShotGun::CanShootTimer()
 {
 	bIsShoot = false;
+}
+
+void AShotGun::CameraShake_Implementation()
+{
 }

@@ -43,6 +43,9 @@ protected:
 	UFUNCTION(NetMulticast, Reliable)
 	void ResPressGetItem();
 
+	UFUNCTION()
+	void OnRep_BaseWeapon();
+
 	void SetPistol();
 	void SetRifle();
 	void SetSniper();
@@ -70,6 +73,12 @@ protected:
 	UFUNCTION(NetMulticast, Reliable)
 	void ResIsDead();
 
+	void HitEffect();
+	UFUNCTION(Server, Reliable)
+		void ReqHitEffect();
+	UFUNCTION(NetMulticast, Reliable)
+		void ResHitEffect();
+
 	void PressZoom();
 	void ReleasedZoom();
 
@@ -93,9 +102,6 @@ private:
 
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
 	AWeaponBase* OverlappingWeapon;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
-	TArray<AWeaponBase*> Inventory;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
 		bool HasPistol;
@@ -131,7 +137,21 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Team", meta = (ExposeOnSpawn = "true"), meta = (AllowPrivateAccess = "true"))
 	ETeam Team;
 
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<AWeaponBase> BasicWeapon;
+
+	UPROPERTY(ReplicatedUsing = OnRep_BaseWeapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	AWeaponBase* BaseWeapon;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	class UParticleSystem* HittedEffect;
+
+	FTimerHandle BaseWeaponTimer;
+
 public:	
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
+	TArray<AWeaponBase*> Inventory;
+
 	FORCEINLINE AWeaponBase* GetEquipWeapon() const { return EquipWeapon; }
 	FORCEINLINE void SetEquipWeapon(AWeaponBase* NewWeapon) { EquipWeapon = NewWeapon; }
 

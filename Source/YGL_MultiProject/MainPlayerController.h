@@ -31,7 +31,7 @@ protected:
 		void ClientTime(float TimeFromServer, float ServerTime);
 
 private:
-	float MaxGameTime;
+	float GameStartTime;
 	float CurServerTime;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))

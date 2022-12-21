@@ -108,4 +108,6 @@ public:
 
 	FORCEINLINE void SetPressShoot(bool NewPress) { bPressShoot = NewPress; }
 
+	void SetCharacter(AMainCharacter* NewCharacter) { Character = NewCharacter; }
+
 };

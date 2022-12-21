@@ -14,6 +14,10 @@
 #include "MainGameModeBase.h"
 #include "MainPlayerController.h"
 #include "Components/CapsuleComponent.h"
+#include "Particles/ParticleSystem.h"
+#include "Kismet/GameplayStatics.h"
+#include "Engine/SkeletalMeshSocket.h"
+#include "Components/BoxComponent.h"
 
 AMainCharacter::AMainCharacter() : 
 	HasPistol(false), HasRifle(false),
@@ -41,6 +45,25 @@ void AMainCharacter::BeginPlay()
 	for (int i = 0; i < 4; i++)
 		Inventory.Add(nullptr);
 	
+	if (BasicWeapon && HasAuthority())
+	{
+		BaseWeapon = GetWorld()->SpawnActor<AWeaponBase>(BasicWeapon, 
+			GetActorTransform());
+	}
+	
+	if (BaseWeapon)
+		OnRep_BaseWeapon();
+
+}
+
+void AMainCharacter::OnRep_BaseWeapon()
+{
+	BaseWeapon->SetCharacter(this);
+	IWeaponInterface* Interface = Cast<IWeaponInterface>(BaseWeapon);
+	if (Interface)
+	{
+		Interface->Execute_PressGetItem(BaseWeapon);
+	}
 }
 
 void AMainCharacter::Tick(float DeltaTime)
@@ -93,6 +116,9 @@ void AMainCharacter::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& Out
 	DOREPLIFETIME(AMainCharacter, EquipWeapon);
 	DOREPLIFETIME(AMainCharacter, OverlappingWeapon);
 	DOREPLIFETIME(AMainCharacter, Health);
+	DOREPLIFETIME(AMainCharacter, BasicWeapon);
+	DOREPLIFETIME(AMainCharacter, BaseWeapon);
+	DOREPLIFETIME(AMainCharacter, Inventory);
 }
 
 float AMainCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
@@ -100,6 +126,8 @@ float AMainCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 	float AppliedDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
 	Health -= AppliedDamage;
+	HitEffect();
+
 	if (Health <= 0)
 	{
 		Health = 0;
@@ -147,6 +175,27 @@ void AMainCharacter::ResIsDead_Implementation()
 		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
+}
+
+void AMainCharacter::HitEffect()
+{
+	ReqHitEffect();
+}
+
+void AMainCharacter::ReqHitEffect_Implementation()
+{
+	ResHitEffect();
+}
+
+void AMainCharacter::ResHitEffect_Implementation()
+{
+	if (HittedEffect)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(),
+			HittedEffect,
+			GetActorTransform());
+	}
+	
 }
 
 void AMainCharacter::MoveForward(float Value)

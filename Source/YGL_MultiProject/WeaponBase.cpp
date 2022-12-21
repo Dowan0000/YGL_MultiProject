@@ -147,7 +147,7 @@ void AWeaponBase::ReqShoot_Implementation(FVector Start, FVector End)
 			FDamageEvent DamageEvent;
 			if (Hit.BoneName.ToString() == "head")
 			{
-				Hit.Actor->TakeDamage(Damage * 2.f, DamageEvent,
+				Hit.Actor->TakeDamage(100.f, DamageEvent,
 					Character->GetController(), this);
 			}
 			else if (Hit.BoneName.ToString() == "pelvis" ||

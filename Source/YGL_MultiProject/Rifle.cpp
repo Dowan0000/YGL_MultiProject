@@ -2,6 +2,7 @@
 
 
 #include "Rifle.h"
+#include "MainCharacter.h"
 
 ARifle::ARifle()
 {
@@ -26,7 +27,9 @@ void ARifle::CameraShake_Implementation()
 
 void ARifle::PressShootTimer()
 {
-	if (bPressShoot)
-		PressShoot_Implementation();
-
+	if (Character->Inventory[1])
+	{
+		if (bPressShoot)
+			PressShoot_Implementation();
+	}
 }

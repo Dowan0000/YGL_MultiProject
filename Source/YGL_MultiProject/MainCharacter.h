@@ -54,6 +54,9 @@ protected:
 	UFUNCTION(NetMulticast, Reliable)
 	void ResPressGetItem();
 
+	UFUNCTION()
+	void OnRep_BaseWeapon();
+
 	void SetPistol();
 	void SetRifle();
 	void SetSniper();
@@ -80,6 +83,12 @@ protected:
 	void ReqIsDead();
 	UFUNCTION(NetMulticast, Reliable)
 	void ResIsDead();
+
+	void HitEffect();
+	UFUNCTION(Server, Reliable)
+		void ReqHitEffect();
+	UFUNCTION(NetMulticast, Reliable)
+		void ResHitEffect();
 
 	void PressZoom();
 	void ReleasedZoom();
@@ -109,9 +118,12 @@ private:
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
 	AWeaponBase* OverlappingWeapon;
 
+<<<<<<< HEAD
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
 	TArray<AWeaponBase*> Inventory;
 
+=======
+>>>>>>> 41be94866ce2cacc9847bb36d1a5c39330e3cf7a
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
 		bool HasPistol;
 
@@ -146,6 +158,7 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Team", meta = (ExposeOnSpawn = "true"), meta = (AllowPrivateAccess = "true"))
 	ETeam Team;
 
+<<<<<<< HEAD
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Items, meta = (AllowPrivateAccess = "true"))
 	TMap<EAmmoType, int32> AmmoMap;
 
@@ -159,8 +172,26 @@ private:
 		int32 StartingSniperAmmo;
 
 	
+=======
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<AWeaponBase> BasicWeapon;
+
+	UPROPERTY(ReplicatedUsing = OnRep_BaseWeapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	AWeaponBase* BaseWeapon;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	class UParticleSystem* HittedEffect;
+
+	FTimerHandle BaseWeaponTimer;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Zoom", meta = (AllowPrivateAccess = "true"))
+	float BaseFOV;
+>>>>>>> 41be94866ce2cacc9847bb36d1a5c39330e3cf7a
 
 public:	
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
+	TArray<AWeaponBase*> Inventory;
+
 	FORCEINLINE AWeaponBase* GetEquipWeapon() const { return EquipWeapon; }
 	FORCEINLINE void SetEquipWeapon(AWeaponBase* NewWeapon) { EquipWeapon = NewWeapon; }
 

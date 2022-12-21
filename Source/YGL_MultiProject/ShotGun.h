@@ -22,4 +22,6 @@ protected:
 
 	void CanShootTimer();
 	
+	UFUNCTION(BlueprintNativeEvent)
+	void CameraShake();
 };

@@ -11,7 +11,8 @@
 
 AWeaponBase::AWeaponBase() : 
 	HandSocket("Pistol_Socket"), MuzzleSocket("MuzzleFlash"),
-	RowName("1"), Damage(10.f)
+	RowName("1"), Damage(10.f),
+	Ammo(0)
 {
  	PrimaryActorTick.bCanEverTick = true;
 

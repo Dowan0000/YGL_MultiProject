@@ -7,6 +7,17 @@
 #include "Team.h"
 #include "MainCharacter.generated.h"
 
+UENUM(BlueprintType)
+enum class EAmmoType : uint8
+{
+	EAT_PistolAmmo UMETA(DisplayName = "PistolAmmo"),
+	EAT_RifleAmmo UMETA(DisplayName = "RifleAmmo"),
+	EAT_SniperAmmo UMETA(DisplayName = "SniperAmmo"),
+
+	EAT_NAX UMETA(DisplayName = "DefaultMAX")
+};
+
+
 UCLASS()
 class YGL_MULTIPROJECT_API AMainCharacter : public ACharacter
 {
@@ -89,6 +100,10 @@ protected:
 	UFUNCTION(NetMulticast, Reliable)
 	void ResCrouch(bool bIsCrouch);
 
+	void InitializeAmmoMap();
+
+	bool WeaponHasAmmo();
+
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
@@ -103,6 +118,12 @@ private:
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
 	AWeaponBase* OverlappingWeapon;
 
+<<<<<<< HEAD
+	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
+	TArray<AWeaponBase*> Inventory;
+
+=======
+>>>>>>> 41be94866ce2cacc9847bb36d1a5c39330e3cf7a
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
 		bool HasPistol;
 
@@ -137,6 +158,21 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Team", meta = (ExposeOnSpawn = "true"), meta = (AllowPrivateAccess = "true"))
 	ETeam Team;
 
+<<<<<<< HEAD
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Items, meta = (AllowPrivateAccess = "true"))
+	TMap<EAmmoType, int32> AmmoMap;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Items, meta = (AllowPrivateAccess = "true"))
+		int32 StartingPistolAmmo;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Items, meta = (AllowPrivateAccess = "true"))
+		int32 StartingRifleAmmo;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Items, meta = (AllowPrivateAccess = "true"))
+		int32 StartingSniperAmmo;
+
+	
+=======
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AWeaponBase> BasicWeapon;
 
@@ -150,6 +186,7 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Zoom", meta = (AllowPrivateAccess = "true"))
 	float BaseFOV;
+>>>>>>> 41be94866ce2cacc9847bb36d1a5c39330e3cf7a
 
 public:	
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Weapon", meta = (AllowPrivateAccess = "true"))

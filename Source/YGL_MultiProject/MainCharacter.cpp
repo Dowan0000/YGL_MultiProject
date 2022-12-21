@@ -54,6 +54,7 @@ void AMainCharacter::BeginPlay()
 	if (BaseWeapon)
 		OnRep_BaseWeapon();
 
+	BaseFOV = Camera->FieldOfView;
 }
 
 void AMainCharacter::OnRep_BaseWeapon()
@@ -423,8 +424,9 @@ void AMainCharacter::PressZoom()
 			{
 				ZoomWidget->AddToViewport();
 
-				SpringArm->TargetArmLength = -4000.f;
-				ZoomControlValue = 0.1f; // zoom 마우스 감도
+				Camera->FieldOfView = BaseFOV - 70.f;
+				ZoomControlValue = 0.3f; // zoom 마우스 감도
+
 			}
 		}
 	}
@@ -438,8 +440,9 @@ void AMainCharacter::ReleasedZoom()
 		{
 			ZoomWidget->RemoveFromParent();
 
-			SpringArm->TargetArmLength = 150.f;
+			Camera->FieldOfView = BaseFOV;
 			ZoomControlValue = 1.f;
+
 		}
 	}
 }

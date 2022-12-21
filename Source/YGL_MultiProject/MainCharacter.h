@@ -148,6 +148,9 @@ private:
 
 	FTimerHandle BaseWeaponTimer;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Zoom", meta = (AllowPrivateAccess = "true"))
+	float BaseFOV;
+
 public:	
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Weapon", meta = (AllowPrivateAccess = "true"))
 	TArray<AWeaponBase*> Inventory;

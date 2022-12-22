@@ -47,11 +47,6 @@ protected:
 	void PressGetItem();
 	virtual void PressGetItem_Implementation() override;
 
-private:
-	// 현재 무기 ammo count 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Properties", meta = (AllowPrivateAccess = "true"))
-	int32 Ammo;
-
 	
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
@@ -102,7 +97,15 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	float Damage;
 
-	// ShootMontage
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
+		int32 CurAmmo;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
+		int32 MaxAmmo;
+
+
 	
 
 public:
@@ -115,8 +118,6 @@ public:
 	FORCEINLINE bool GetbIsShoot() const { return bIsShoot; }
 
 	FORCEINLINE void SetPressShoot(bool NewPress) { bPressShoot = NewPress; }
-
-	FORCEINLINE int32 GetAmmo() const { return Ammo; }
 
 	void SetCharacter(AMainCharacter* NewCharacter) { Character = NewCharacter; }
 

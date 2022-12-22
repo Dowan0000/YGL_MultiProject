@@ -100,10 +100,6 @@ protected:
 	UFUNCTION(NetMulticast, Reliable)
 	void ResCrouch(bool bIsCrouch);
 
-	void InitializeAmmoMap();
-
-	bool WeaponHasAmmo();
-
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
@@ -151,18 +147,6 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Team", meta = (ExposeOnSpawn = "true"), meta = (AllowPrivateAccess = "true"))
 	ETeam Team;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Items, meta = (AllowPrivateAccess = "true"))
-	TMap<EAmmoType, int32> AmmoMap;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Items, meta = (AllowPrivateAccess = "true"))
-		int32 StartingPistolAmmo;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Items, meta = (AllowPrivateAccess = "true"))
-		int32 StartingRifleAmmo;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Items, meta = (AllowPrivateAccess = "true"))
-		int32 StartingSniperAmmo;
 
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AWeaponBase> BasicWeapon;

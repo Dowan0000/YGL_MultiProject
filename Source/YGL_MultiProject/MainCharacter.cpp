@@ -23,12 +23,7 @@ AMainCharacter::AMainCharacter() :
 	HasPistol(false), HasRifle(false),
 	HasSniper(false), HasLauncher(false),
 	Health(100.f), MaxHealth(100.f),
-	ZoomControlValue(1.f),
-	StartingPistolAmmo(12),
-	StartingRifleAmmo(30),
-	StartingSniperAmmo(7)
-
-
+	ZoomControlValue(1.f)
 
 {
  	PrimaryActorTick.bCanEverTick = true;
@@ -72,19 +67,6 @@ void AMainCharacter::OnRep_BaseWeapon()
 	{
 		Interface->Execute_PressGetItem(BaseWeapon);
 	}
-}
-
-void AMainCharacter::InitializeAmmoMap()
-{
-	AmmoMap.Add(EAmmoType::EAT_PistolAmmo, StartingPistolAmmo);
-	AmmoMap.Add(EAmmoType::EAT_RifleAmmo, StartingRifleAmmo);
-}
-
-bool AMainCharacter::WeaponHasAmmo()
-{
-	if (EquipWeapon == nullptr) return false;
-
-	return EquipWeapon->GetAmmo() > 0;
 }
 
 

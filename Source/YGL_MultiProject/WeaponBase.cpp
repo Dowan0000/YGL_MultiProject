@@ -11,7 +11,8 @@
 
 AWeaponBase::AWeaponBase() : 
 	HandSocket("Pistol_Socket"), MuzzleSocket("MuzzleFlash"),
-	RowName("1"), Damage(10.f)
+	RowName("1"), Damage(10.f),
+	CurAmmo(0), MaxAmmo(0)
 	
 {
  	PrimaryActorTick.bCanEverTick = true;
@@ -264,6 +265,8 @@ void AWeaponBase::PressGetItem_Implementation()
 		Character->SetInventory();
 		Character->SetWeaponUI();
 	}
+
+
 }
 
 void AWeaponBase::SetItemState(EItemState NewItemState)

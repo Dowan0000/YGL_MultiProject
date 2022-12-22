@@ -75,6 +75,5 @@ public:
 	void SetWeaponUI();
 
 	UFUNCTION(BlueprintNativeEvent)
-	void DrawHUDTime(int Seconds);
-
+	void DrawHUDTime(int Seconds, int min);
 };

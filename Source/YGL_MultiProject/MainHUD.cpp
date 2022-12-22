@@ -185,7 +185,7 @@ void AMainHUD::SetWeaponUI_Implementation()
 
 }
 
-void AMainHUD::DrawHUDTime_Implementation(int Seconds)
+void AMainHUD::DrawHUDTime_Implementation(int Seconds, int min)
 {
 
 }

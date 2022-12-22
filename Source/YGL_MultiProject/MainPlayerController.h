@@ -34,7 +34,8 @@ private:
 	float GameStartTime;
 	float CurServerTime;
 
-	float min = 5;
+	float min;
+	int ab;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	bool CanStart;

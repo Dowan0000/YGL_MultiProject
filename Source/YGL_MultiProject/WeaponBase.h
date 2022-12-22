@@ -113,10 +113,9 @@ public:
 
 	FORCEINLINE void SetPressShoot(bool NewPress) { bPressShoot = NewPress; }
 
-<<<<<<< HEAD
 	FORCEINLINE int32 GetAmmo() const { return Ammo; }
-=======
+
 	void SetCharacter(AMainCharacter* NewCharacter) { Character = NewCharacter; }
->>>>>>> 41be94866ce2cacc9847bb36d1a5c39330e3cf7a
+
 
 };

@@ -50,10 +50,8 @@ void AMainCharacter::BeginPlay()
 	for (int i = 0; i < 4; i++)
 		Inventory.Add(nullptr);
 	
-<<<<<<< HEAD
 	void InitializeAmmoMap();
 
-=======
 	if (BasicWeapon && HasAuthority())
 	{
 		BaseWeapon = GetWorld()->SpawnActor<AWeaponBase>(BasicWeapon, 
@@ -74,7 +72,6 @@ void AMainCharacter::OnRep_BaseWeapon()
 	{
 		Interface->Execute_PressGetItem(BaseWeapon);
 	}
->>>>>>> 41be94866ce2cacc9847bb36d1a5c39330e3cf7a
 }
 
 void AMainCharacter::InitializeAmmoMap()
@@ -141,11 +138,8 @@ void AMainCharacter::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& Out
 	DOREPLIFETIME(AMainCharacter, EquipWeapon);
 	DOREPLIFETIME(AMainCharacter, OverlappingWeapon);
 	DOREPLIFETIME(AMainCharacter, Health);
-<<<<<<< HEAD
-=======
 	DOREPLIFETIME(AMainCharacter, BasicWeapon);
 	DOREPLIFETIME(AMainCharacter, BaseWeapon);
->>>>>>> 41be94866ce2cacc9847bb36d1a5c39330e3cf7a
 	DOREPLIFETIME(AMainCharacter, Inventory);
 }
 

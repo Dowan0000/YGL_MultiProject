@@ -42,7 +42,7 @@ void AMainPlayerController::SetHUDTime()
 	}
 	else
 	{
-		CurRestTime = GameStartTime + CurServerTime;
+		CurRestTime = GameStartTime - CurServerTime;
 	}
 
 	AMainHUD* HUD = Cast<AMainHUD>(GetHUD());

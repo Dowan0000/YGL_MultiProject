@@ -6,7 +6,7 @@
 #include "MainHUD.h"
 
 AMainPlayerController::AMainPlayerController() :
-	GameStartTime(-5.f), CurServerTime(0.f),
+	GameStartTime(600.f), CurServerTime(0.f),
 	CanStart(false)
 {
 
@@ -38,7 +38,7 @@ void AMainPlayerController::SetHUDTime()
 	if (HasAuthority())
 	{
 		CurTime = GetWorld()->GetTimeSeconds();
-		CurRestTime = GameStartTime + CurTime;
+		CurRestTime = GameStartTime - CurTime;
 	}
 	else
 	{

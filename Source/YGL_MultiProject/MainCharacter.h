@@ -178,7 +178,6 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Zoom", meta = (AllowPrivateAccess = "true"))
 	float BaseFOV;
 
-
 public:	
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
 	TArray<AWeaponBase*> Inventory;
@@ -193,5 +192,12 @@ public:
 	void SetWeaponUI();
 
 	FORCEINLINE ETeam GetTeam() const { return Team; }
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+		class UAnimMontage* PistolShootMontage;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+		class UAnimMontage* RifleShootMontage;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+		class UAnimMontage* ShotGunShootMontage;
 
 };

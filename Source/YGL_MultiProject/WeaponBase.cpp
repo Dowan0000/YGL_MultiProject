@@ -173,11 +173,29 @@ void AWeaponBase::ShootEffectSound_Implementation()
 {
 	if (Character == nullptr) return;
 
-	if (WeaponData->ShootMontage)
+	
+	if (ItemType == EItemType::EIT_Pistol)
 	{
-		Character->PlayAnimMontage(WeaponData->ShootMontage);
+		if (Character->PistolShootMontage)
+		{
+			Character->PlayAnimMontage(Character->PistolShootMontage);
+		}
 	}
-
+	if (ItemType == EItemType::EIT_Rifle)
+	{
+		if (Character->RifleShootMontage)
+		{
+			Character->PlayAnimMontage(Character->RifleShootMontage);
+		}
+	}
+	if (ItemType == EItemType::EIT_Sniper || ItemType == EItemType::EIT_Launcher)
+	{
+		if (Character->ShotGunShootMontage)
+		{
+			Character->PlayAnimMontage(Character->ShotGunShootMontage);
+		}
+	}
+	
 	const USkeletalMeshSocket* MeshSocketName = Mesh->GetSocketByName(MuzzleSocket);
 	if (MeshSocketName)
 	{

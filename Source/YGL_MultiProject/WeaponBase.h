@@ -102,6 +102,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	float Damage;
 
+	// ShootMontage
+	
+
 public:
 	FORCEINLINE EItemType GetItemType() const { return ItemType; }
 	

@@ -13,9 +13,6 @@ public:
 	{}
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
-	class UAnimMontage* ShootMontage;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	class UParticleSystem* ShootEffect;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")

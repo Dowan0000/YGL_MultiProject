@@ -32,7 +32,7 @@ void AShotGun::PressShoot_Implementation()
 		UE_LOG(LogTemp, Warning, TEXT("LineTrace"));
 		bool bResult = GetWorld()->SweepMultiByChannel(Hit, 
 			SocketTransform.GetLocation(), 
-			SocketTransform.GetLocation() + Character->GetActorForwardVector() * 500.f,
+			SocketTransform.GetLocation() + Character->GetActorForwardVector() * 1000.f,
 			FQuat::Identity, 
 			ECollisionChannel::ECC_GameTraceChannel1,
 			FCollisionShape::MakeSphere(300.f),

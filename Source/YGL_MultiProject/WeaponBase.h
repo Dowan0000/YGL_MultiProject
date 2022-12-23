@@ -98,11 +98,11 @@ protected:
 	float Damage;
 
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Combat")
 		int32 CurAmmo;
 
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, Category = "Combat")
 		int32 MaxAmmo;
 
 

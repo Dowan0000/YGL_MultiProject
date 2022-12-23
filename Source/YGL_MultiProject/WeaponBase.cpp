@@ -66,6 +66,8 @@ void AWeaponBase::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLif
 	DOREPLIFETIME(AWeaponBase, ItemType);
 	DOREPLIFETIME(AWeaponBase, ItemState);
 	DOREPLIFETIME(AWeaponBase, RowName);
+	DOREPLIFETIME(AWeaponBase, CurAmmo);
+	DOREPLIFETIME(AWeaponBase, MaxAmmo);
 }
 
 void AWeaponBase::BoxBeginOverlap_Implementation(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

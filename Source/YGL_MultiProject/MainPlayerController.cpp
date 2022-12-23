@@ -6,8 +6,8 @@
 #include "MainHUD.h"
 
 AMainPlayerController::AMainPlayerController() :
-	GameStartTime(62.0f), CurServerTime(0.f),
-	CanStart(true), min(5.f), ab(0)
+	GameStartTime(65.0f), CurServerTime(0.f),
+	CanStart(false), min(5.f), ab(0)
 {
 
 }
@@ -50,7 +50,6 @@ void AMainPlayerController::SetHUDTime()
 		ab++;
 		min--;
 	}
-	
 
 	AMainHUD* HUD = Cast<AMainHUD>(GetHUD());
 	if (HUD)
@@ -58,8 +57,8 @@ void AMainPlayerController::SetHUDTime()
 		HUD->DrawHUDTime(CurRestTime, min);
 	}
 
-	/*if (0 <= CurRestTime)
-		CanStart = true;*/
+	if (CurRestTime < 60)
+		CanStart = true;
 }
 
 void AMainPlayerController::ServerTime_Implementation(float TimeFromClient)

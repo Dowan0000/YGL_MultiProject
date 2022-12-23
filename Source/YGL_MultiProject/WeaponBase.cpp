@@ -177,23 +177,23 @@ void AWeaponBase::ShootEffectSound_Implementation()
 	
 	if (ItemType == EItemType::EIT_Pistol)
 	{
-		if (Character->PistolShootMontage)
+		if (Character->CharacterData->PistolShootMontage)
 		{
-			Character->PlayAnimMontage(Character->PistolShootMontage);
+			Character->PlayAnimMontage(Character->CharacterData->PistolShootMontage);
 		}
 	}
 	if (ItemType == EItemType::EIT_Rifle)
 	{
-		if (Character->RifleShootMontage)
+		if (Character->CharacterData->RifleShootMontage)
 		{
-			Character->PlayAnimMontage(Character->RifleShootMontage);
+			Character->PlayAnimMontage(Character->CharacterData->RifleShootMontage);
 		}
 	}
 	if (ItemType == EItemType::EIT_Sniper || ItemType == EItemType::EIT_Launcher)
 	{
-		if (Character->ShotGunShootMontage)
+		if (Character->CharacterData->ShotGunShootMontage)
 		{
-			Character->PlayAnimMontage(Character->ShotGunShootMontage);
+			Character->PlayAnimMontage(Character->CharacterData->ShotGunShootMontage);
 		}
 	}
 	

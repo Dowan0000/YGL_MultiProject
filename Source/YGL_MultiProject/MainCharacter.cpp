@@ -56,6 +56,11 @@ void AMainCharacter::BeginPlay()
 		OnRep_BaseWeapon();
 
 	BaseFOV = Camera->FieldOfView;
+
+	if (CharacterMonTable)
+	{
+		CharacterData = CharacterMonTable->FindRow<FST_Character>(RowName, TEXT(""));
+	}
 }
 
 void AMainCharacter::OnRep_BaseWeapon()
@@ -122,6 +127,7 @@ void AMainCharacter::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& Out
 	DOREPLIFETIME(AMainCharacter, BasicWeapon);
 	DOREPLIFETIME(AMainCharacter, BaseWeapon);
 	DOREPLIFETIME(AMainCharacter, Inventory);
+	DOREPLIFETIME(AMainCharacter, RowName);
 }
 
 float AMainCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
@@ -192,11 +198,13 @@ void AMainCharacter::ReqHitEffect_Implementation()
 
 void AMainCharacter::ResHitEffect_Implementation()
 {
-	if (HittedEffect)
+	if (HittedEffect && CharacterData->AttackedMontage)
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(),
 			HittedEffect,
 			GetActorTransform());
+
+		PlayAnimMontage(CharacterData->AttackedMontage, 1.f);
 	}
 	
 }
@@ -323,6 +331,15 @@ void AMainCharacter::SetPistol()
 	if (Inventory[0] == nullptr) return;
 
 	ReqChangeItem(0);
+
+	if (CharacterMonTable)
+	{
+		if (CharacterData)
+		{
+			if (CharacterData->PistolEquipMontage == nullptr) return;
+			EquipMontage(CharacterData->PistolEquipMontage);
+		}
+	}
 }
 
 void AMainCharacter::SetRifle()
@@ -331,6 +348,15 @@ void AMainCharacter::SetRifle()
 	if (Inventory[1] == nullptr) return;
 
 	ReqChangeItem(1);
+	
+	if (CharacterMonTable)
+	{
+		if (CharacterData)
+		{
+			if (CharacterData->RifleEquipMontage == nullptr) return;
+			EquipMontage(CharacterData->RifleEquipMontage);
+		}
+	}
 }
 
 void AMainCharacter::SetSniper()
@@ -339,6 +365,15 @@ void AMainCharacter::SetSniper()
 	if (Inventory[2] == nullptr) return;
 
 	ReqChangeItem(2);
+
+	if (CharacterMonTable)
+	{
+		if (CharacterData)
+		{
+			if (CharacterData->SniperEquipMontage == nullptr) return;
+			EquipMontage(CharacterData->SniperEquipMontage);
+		}
+	}
 }
 
 void AMainCharacter::SetLauncher()
@@ -347,6 +382,15 @@ void AMainCharacter::SetLauncher()
 	if (Inventory[3] == nullptr) return;
 
 	ReqChangeItem(3);
+
+	if (CharacterMonTable)
+	{
+		if (CharacterData)
+		{
+			if (CharacterData->ShotGunEquipMontage == nullptr) return;
+			EquipMontage(CharacterData->ShotGunEquipMontage);
+		}
+	}
 }
 
 void AMainCharacter::ReqChangeItem_Implementation(int ItemNum)
@@ -413,6 +457,15 @@ void AMainCharacter::SetDropInventory()
 		Inventory[3] = nullptr;
 		HasLauncher = false;
 	}
+
+	if (CharacterMonTable)
+	{
+		if (CharacterData)
+		{
+			if (CharacterData->PistolEquipMontage == nullptr) return;
+			EquipMontage(CharacterData->PistolEquipMontage);
+		}
+	}
 }
 
 void AMainCharacter::PressZoom()
@@ -470,6 +523,22 @@ void AMainCharacter::ResCrouch_Implementation(bool bIsCrouch)
 	else UnCrouch();
 }
 
+void AMainCharacter::EquipMontage(UAnimMontage* EquipMontage)
+{
+	ReqEquipMontage(EquipMontage);
+}
+
+void AMainCharacter::ReqEquipMontage_Implementation(UAnimMontage* EquipMontage)
+{
+	ResEquipMontage(EquipMontage);
+}
+
+void AMainCharacter::ResEquipMontage_Implementation(UAnimMontage* EquipMontage)
+{
+	PlayAnimMontage(EquipMontage, 1.f);
+}
+
+
 void AMainCharacter::SetInventory()
 {
 	if (EquipWeapon == nullptr) return;
@@ -478,21 +547,57 @@ void AMainCharacter::SetInventory()
 	{
 		Inventory[0] = EquipWeapon;
 		HasPistol = true;
+
+		if (CharacterMonTable)
+		{
+			if (CharacterData)
+			{
+				if (CharacterData->PistolEquipMontage == nullptr) return;
+				EquipMontage(CharacterData->PistolEquipMontage);
+			}
+		}
 	}
 	else if (EquipWeapon->GetItemType() == EItemType::EIT_Rifle)
 	{
 		Inventory[1] = EquipWeapon;
 		HasRifle = true;
+
+		if (CharacterMonTable)
+		{
+			if (CharacterData)
+			{
+				if (CharacterData->RifleEquipMontage == nullptr) return;
+				EquipMontage(CharacterData->RifleEquipMontage);
+			}
+		}
 	}
 	else if (EquipWeapon->GetItemType() == EItemType::EIT_Sniper)
 	{
 		Inventory[2] = EquipWeapon;
 		HasSniper = true;
+
+		if (CharacterMonTable)
+		{
+			if (CharacterData)
+			{
+				if (CharacterData->SniperEquipMontage == nullptr) return;
+				EquipMontage(CharacterData->SniperEquipMontage);
+			}
+		}
 	}
 	else if (EquipWeapon->GetItemType() == EItemType::EIT_Launcher)
 	{
 		Inventory[3] = EquipWeapon;
 		HasLauncher = true;
+
+		if (CharacterMonTable)
+		{
+			if (CharacterData)
+			{
+				if (CharacterData->ShotGunEquipMontage == nullptr) return;
+				EquipMontage(CharacterData->ShotGunEquipMontage);
+			}
+		}
 	}
 }
 

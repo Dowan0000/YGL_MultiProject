@@ -14,7 +14,7 @@ void ARifle::PressShoot_Implementation()
 {
 	Super::PressShoot_Implementation();
 
-	UE_LOG(LogTemp, Warning, TEXT("RifleShoot"));
+	UE_LOG(LogTemp, Warning, TEXT("RifleShoot1111111"));
 	CameraShake();
 
 	GetWorldTimerManager().SetTimer(ShootTimer, this,

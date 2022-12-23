@@ -427,7 +427,7 @@ void AMainCharacter::PressZoom()
 				ZoomWidget->AddToViewport();
 
 				Camera->FieldOfView = BaseFOV - 70.f;
-				ZoomControlValue = 0.3f; // zoom 마우스 감도
+				ZoomControlValue = 0.5f; // zoom 마우스 감도
 
 			}
 		}

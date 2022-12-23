@@ -7,7 +7,6 @@
 #include "WeaponBase.h"
 #include "WeaponInterface.h"
 #include "Net/UnrealNetwork.h"
-#include "EnemyFSM.h"
 #include "MainHUD.h"
 #include "Blueprint/UserWidget.h"
 #include "MainAnimInstance.h"

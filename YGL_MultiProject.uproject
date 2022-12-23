@@ -27,11 +27,6 @@
 		{
 			"Name": "AdvancedSteamSessions",
 			"Enabled": true
-		},
-		{
-			"Name": "FastAI",
-			"Enabled": true,
-			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/a2cfaf2baeb84c1d81b955af374f8e0c"
 		}
 	]
 }

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Team.h"
+#include "FST_Character.h"
 #include "MainCharacter.generated.h"
 
 UENUM(BlueprintType)
@@ -100,6 +101,11 @@ protected:
 	UFUNCTION(NetMulticast, Reliable)
 	void ResCrouch(bool bIsCrouch);
 
+	void EquipMontage(class UAnimMontage* EquipMontage);
+	UFUNCTION(Server, Reliable)
+	void ReqEquipMontage(UAnimMontage* EquipMontage);
+	UFUNCTION(NetMulticast, Reliable)
+	void ResEquipMontage(UAnimMontage* EquipMontage);
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
@@ -151,7 +157,7 @@ private:
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AWeaponBase> BasicWeapon;
 
-	UPROPERTY(ReplicatedUsing = OnRep_BaseWeapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(ReplicatedUsing = OnRep_BaseWeapon, VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	AWeaponBase* BaseWeapon;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat", meta = (AllowPrivateAccess = "true"))
@@ -161,6 +167,12 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Zoom", meta = (AllowPrivateAccess = "true"))
 	float BaseFOV;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		class UDataTable* CharacterMonTable;
+
+	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		FName RowName;
 
 public:	
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
@@ -177,11 +189,6 @@ public:
 
 	FORCEINLINE ETeam GetTeam() const { return Team; }
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
-		class UAnimMontage* PistolShootMontage;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
-		class UAnimMontage* RifleShootMontage;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
-		class UAnimMontage* ShotGunShootMontage;
+	FST_Character* CharacterData;
 
 };

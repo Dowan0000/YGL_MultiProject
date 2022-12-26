@@ -18,14 +18,14 @@ void ARifle::PressShoot_Implementation()
 	CameraShake();
 
 	GetWorldTimerManager().SetTimer(ShootTimer, this,
-		&ARifle::PressShootTimer, 0.2f);
+		&ARifle::PressShootTimer, 0.15f);
 }
 
 void ARifle::CameraShake_Implementation()
 {
 }
 
-void ARifle::PressShootTimer()
+void ARifle::PressShootTimer_Implementation()
 {
 	if (Character->Inventory[1])
 	{

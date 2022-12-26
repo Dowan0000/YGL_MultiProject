@@ -87,6 +87,7 @@ protected:
 	FName RowName;
 
 	// crosshair
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	bool bIsShoot;
 
 	FTimerHandle ShootTimer;

@@ -17,6 +17,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Engine/SkeletalMeshSocket.h"
 #include "Components/BoxComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 AMainCharacter::AMainCharacter() : 
 	HasPistol(false), HasRifle(false),
@@ -35,6 +36,7 @@ AMainCharacter::AMainCharacter() :
 
 	SpringArm->bUsePawnControlRotation = true;
 
+	GetCharacterMovement()->JumpZVelocity = 600.f;
 }
 
 void AMainCharacter::BeginPlay()

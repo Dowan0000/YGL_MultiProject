@@ -30,15 +30,20 @@ protected:
 	UFUNCTION(Client, Reliable)
 		void ClientTime(float TimeFromServer, float ServerTime);
 
+	UFUNCTION(BlueprintNativeEvent)
+	void EnableInputMode();
+
 private:
 	float GameStartTime;
 	float CurServerTime;
+
+	bool WaitTime;
 
 	float min;
 	int ab;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	bool CanStart;
+	class AMainHUD* HUD;
 
 public:
 	UFUNCTION(BlueprintNativeEvent)

@@ -132,7 +132,7 @@ void AWeaponBase::ReqShoot_Implementation(FVector Start, FVector End)
 
 	ShootEffectSound();
 
-	DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 5.f);
+	//DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 5.f);
 
 	if (bResult)
 	{

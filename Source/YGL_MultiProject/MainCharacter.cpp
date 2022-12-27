@@ -186,6 +186,8 @@ void AMainCharacter::ResIsDead_Implementation()
 		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
+
+	EquipWeapon->SetItemState(EItemState::EIS_Dropped);
 }
 
 void AMainCharacter::HitEffect()

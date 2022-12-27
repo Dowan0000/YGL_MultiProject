@@ -27,7 +27,8 @@ void ARifle::CameraShake_Implementation()
 
 void ARifle::PressShootTimer_Implementation()
 {
-	if (Character->Inventory[1])
+	if (Character->Inventory[1] && 
+		Character->GetEquipWeapon()->GetItemType() == EItemType::EIT_Rifle)
 	{
 		if (bPressShoot)
 			PressShoot_Implementation();

@@ -37,7 +37,7 @@ void AShotGun::PressShoot_Implementation()
 			ECollisionChannel::ECC_GameTraceChannel1,
 			FCollisionShape::MakeSphere(300.f),
 			Params);
-
+		
 		ShootEffectSound();
 
 		bIsShoot = true;
@@ -54,10 +54,12 @@ void AShotGun::PressShoot_Implementation()
 
 			for (FHitResult& Hitted : Hit)
 			{
+				if (Hitted.Actor == nullptr) return;
+				
 				FDamageEvent DamageEvent;
 				Hitted.Actor->TakeDamage(Damage, DamageEvent,
 					Character->GetController(), this);
-
+				
 			}
 		}
 	}

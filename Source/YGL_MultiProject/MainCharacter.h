@@ -107,6 +107,9 @@ protected:
 	UFUNCTION(NetMulticast, Reliable)
 	void ResEquipMontage(UAnimMontage* EquipMontage);
 
+	void PressMouseSensitiveDown();
+	void PressMouseSensitiveUp();
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* SpringArm;
@@ -173,6 +176,8 @@ private:
 
 	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		FName RowName;
+
+	float PressMouseSensitive;
 
 public:	
 	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")

@@ -23,7 +23,7 @@ AMainCharacter::AMainCharacter() :
 	HasPistol(false), HasRifle(false),
 	HasSniper(false), HasLauncher(false),
 	Health(100.f), MaxHealth(100.f),
-	ZoomControlValue(1.f)
+	ZoomControlValue(1.f), PressMouseSensitive(1.f)
 
 {
  	PrimaryActorTick.bCanEverTick = true;
@@ -117,6 +117,9 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAction(TEXT("Crouch"), EInputEvent::IE_Pressed, this, &AMainCharacter::PressCrouch);
 	PlayerInputComponent->BindAction(TEXT("Crouch"), EInputEvent::IE_Released, this, &AMainCharacter::ReleaseCrouch);
 
+	// MouseSensitive
+	PlayerInputComponent->BindAction(TEXT("MouseSensitive-"), EInputEvent::IE_Pressed, this, &AMainCharacter::PressMouseSensitiveDown);
+	PlayerInputComponent->BindAction(TEXT("MouseSensitive+"), EInputEvent::IE_Pressed, this, &AMainCharacter::PressMouseSensitiveUp);
 }
 
 void AMainCharacter::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const
@@ -235,12 +238,12 @@ void AMainCharacter::MoveRight(float Value)
 
 void AMainCharacter::LookUp(float Value)
 {
-	AddControllerPitchInput(Value * ZoomControlValue);
+	AddControllerPitchInput(Value * ZoomControlValue * PressMouseSensitive);
 }
 
 void AMainCharacter::Turn(float Value)
 {
-	AddControllerYawInput(Value * ZoomControlValue);
+	AddControllerYawInput(Value * ZoomControlValue * PressMouseSensitive);
 }
 
 void AMainCharacter::PressShoot()
@@ -542,6 +545,18 @@ void AMainCharacter::ResEquipMontage_Implementation(UAnimMontage* EquipMontage)
 	PlayAnimMontage(EquipMontage, 1.f);
 }
 
+void AMainCharacter::PressMouseSensitiveDown()
+{
+	PressMouseSensitive -= 0.2;
+
+	if (PressMouseSensitive <= 0.2f)
+		PressMouseSensitive = 0.2f;
+}
+
+void AMainCharacter::PressMouseSensitiveUp()
+{
+	PressMouseSensitive += 0.2;
+}
 
 void AMainCharacter::SetInventory()
 {

@@ -38,6 +38,23 @@ void UMainAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		}
 		
 		IsCrouch = Character->bIsCrouched;
+
+		if (IsInAir)
+		{
+			ZVelocity = Character->GetVelocity().Size();
+			UE_LOG(LogTemp, Warning, TEXT("%f"), ZVelocity);
+		}
+		else
+		{
+			if (ZVelocity > 1300.f)
+			{
+				FDamageEvent Damage;
+				Character->TakeDamage(ZVelocity * 0.02f, Damage, 
+					GetWorld()->GetFirstPlayerController(), Character);
+				ZVelocity = 0.f;
+			}
+		}
+
 	}
 
 	/*FString RotationMesagge = FString::Printf(TEXT("Direction : %f"), Direction);

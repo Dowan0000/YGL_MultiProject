@@ -41,6 +41,8 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	bool bIsDead;
 
+	float ZVelocity;
+
 public:
 	void IsDead();
 

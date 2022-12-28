@@ -39,6 +39,7 @@ void UMainAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		
 		IsCrouch = Character->bIsCrouched;
 
+		// ³«ÇÏ µ¥¹ÌÁö
 		if (IsInAir)
 		{
 			ZVelocity = Character->GetVelocity().Size();

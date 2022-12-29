@@ -1,7 +1,9 @@
 <p align="middle" >
-  <img width="200px;" src="https://github.com/woowacourse/javascript-racingcar-precourse/blob/main/images/racingcar_icon.png?raw=true"/>
+  <img width="200px;" src="C:\Users\guyus\Downloads\Untitled (1).png"/>
 </p>
 <h1 align="middle">자동차 경주 게임</h1>
+
+
 
 ## 🔍 진행방식
 

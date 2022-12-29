@@ -60,17 +60,16 @@ public:
 - **엔진과 연결되어 소통하는 로그인,회원가입,채팅 서버는 프로젝트 폴더 이외의 별도 폴더에서 작업한다.**
 - **함수(또는 메소드)가 한 가지 일만 정확하게 기능하도록 구현한다.**
 
-
 <br>
 
 ## 📝 과제 진행 요구사항
 
-- 미션은 [https://github.com/woowacourse/javascript-racingcar-precours](https://github.com/woowacourse/javascript-racingcar-precourse) 저장소를 fork/clone해 시작한다.
-- **기능을 구현하기 전에 구현할 기능 목록을 정리해 javascript-racingcar-precourse/docs/README.md 파일에** 추가한다.
+- 미션은 [https://github.com/Dowan0000/YGL_MultiProject.git](https://github.com/Dowan0000/YGL_MultiProject.git) 저장소를 fork/clone해 시작한다.
+- **기능을 구현하기 전에 구현할 기능 목록을 정리해 https://docs.google.com/spreadsheets/d/1dOhZeRSoz_22IZ_pClrRmj1QAn8iQ_6eHELzKJyUY7Q/edit#gid=1526455799 파일에** 추가한다.
 - **git의 commit 단위는 앞 단계에서 README.md 파일에 정리한 기능 목록 단위로 추가**한다.
-- [프리코스 과제 제출](https://github.com/woowacourse/woowacourse-docs/tree/master/precourse) 문서 절차를 따라 미션을 제출한다.
+- [과제 제출](https://docs.google.com/spreadsheets/d/1dOhZeRSoz_22IZ_pClrRmj1QAn8iQ_6eHELzKJyUY7Q/edit#gid=1526455799) 문서 절차를 따라 미션을 제출한다.
 
-## ✉️ 미션 제출 방법
+## ✉️ 과제 제출 방법
 
 - 미션 구현을 완료한 후 GitHub을 통해 제출해야 한다.
    - GitHub을 활용한 제출 방법은 [프리코스 과제 제출 문서](https://github.com/woowacourse/woowacourse-docs/tree/master/precourse) 를 참고해 제출한다.

@@ -1,5 +1,5 @@
 <p align="middle" >
-  <img width="200px;" src="C:\Users\guyus\Downloads\Untitled (1).png"/>
+  <img width="200px;" src="https://user-images.githubusercontent.com/106827197/209891792-dc021eb7-be22-45e7-9ecd-756aed4f1c8c.png/>
 </p>
 <h1 align="middle">자동차 경주 게임</h1>
 

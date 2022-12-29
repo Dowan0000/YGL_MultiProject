@@ -29,7 +29,7 @@ TPS장르의 멀티플레이가 가능한 팀 vs 팀 FPS 게임을 구현한다
 
 ### 💻 실행 결과
 
-![실행이미지](images/result.jpg)
+![실행이미지](Untitled (2).png)
 
 <br>
 

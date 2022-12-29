@@ -47,9 +47,8 @@ public:
 	AMainCharacter();
 
 ```
-
 ### 라이브러리
-- 전진하는 조건을 판단하기 위한 랜덤 값은 [`MissionUtils` 라이브러리](https://github.com/woowacourse-projects/javascript-mission-utils#mission-utils)의 `Random.pickNumberInRange`를 사용해 구한다.
+- UE4 에디터와 사설 소켓 서버를 연동해, 통신하기 위한 라이브러리는 [`MissionUtils` 라이브러리](https://github.com/CodeSpartan/UE4TcpSocketPlugin.git)의 `TCP Socket Connection`을 사용해 구한다.
   - `MissionUtils` 라이브러리 스크립트는 `index.html`에 이미 포함되어 전역 객체에 추가되어 있으므로, 따로 `import` 하지 않아도 구현 코드 어디에서든 사용할 수 있다.
 
   ```javascript

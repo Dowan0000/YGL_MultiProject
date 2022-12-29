@@ -1,6 +1,6 @@
 <p align="middle" >
-  <img width="200px;" src="https://user-images.githubusercontent.com/106827197/209891837-2d6620d6-cf61-4ce3-b7e7-6ba2422765be.png/>
-  ![Untitled (1)](https://user-images.githubusercontent.com/106827197/209891837-2d6620d6-cf61-4ce3-b7e7-6ba2422765be.png)
+
+![Untitled (1)](https://user-images.githubusercontent.com/106827197/209891837-2d6620d6-cf61-4ce3-b7e7-6ba2422765be.png)
 
 </p>
 <h1 align="middle">자동차 경주 게임</h1>

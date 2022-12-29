@@ -61,41 +61,9 @@ public:
 - **함수(또는 메소드)가 한 가지 일만 정확하게 기능하도록 구현한다.**
 
 <br>
-
 ## 📝 과제 진행 요구사항
 
 - 미션은 [https://github.com/Dowan0000/YGL_MultiProject.git](https://github.com/Dowan0000/YGL_MultiProject.git) 저장소를 fork/clone해 시작한다.
 - **기능을 구현하기 전에 구현할 기능 목록을 정리해 https://docs.google.com/spreadsheets/d/1dOhZeRSoz_22IZ_pClrRmj1QAn8iQ_6eHELzKJyUY7Q/edit#gid=1526455799 파일에** 추가한다.
 - **git의 commit 단위는 앞 단계에서 README.md 파일에 정리한 기능 목록 단위로 추가**한다.
 - [과제 제출](https://docs.google.com/spreadsheets/d/1dOhZeRSoz_22IZ_pClrRmj1QAn8iQ_6eHELzKJyUY7Q/edit#gid=1526455799) 문서 절차를 따라 미션을 제출한다.
-
-## ✉️ 과제 제출 방법
-
-- 미션 구현을 완료한 후 GitHub을 통해 제출해야 한다.
-   - GitHub을 활용한 제출 방법은 [프리코스 과제 제출 문서](https://github.com/woowacourse/woowacourse-docs/tree/master/precourse) 를 참고해 제출한다.
-- GitHub에 미션을 제출한 후 [우아한테크코스 지원 플랫폼](https://apply.techcourse.co.kr) 에 접속하여 프리코스 과제를 제출한다.
-   - 자세한 방법은 [링크](https://github.com/woowacourse/woowacourse-docs/tree/master/precourse#제출-가이드) 를 참고한다.
-   - **Pull Request만 보내고, 지원 플랫폼에서 과제를 제출하지 않으면 최종 제출하지 않은 것으로 처리되니 주의한다.**
-
-
-### 🚨 과제 제출 전 체크리스트 - 0점 방지를 위한 주의사항
-- 요구사항에 명시된 출력값 형식을 지키지 않을 경우 기능 구현을 모두 정상적으로 했더라도 0점으로 처리된다.
-- 기능 구현을 완료한 뒤 아래 가이드에 따라 테스트를 실행했을 때 모든 테스트가 성공하는 지 확인한다. **테스트가 실패할 경우 0점으로 처리되므로, 반드시 확인 후 제출한다.**
-
-### ✔️ 테스트 실행 가이드
-- 테스트 실행에 필요한 패키지 설치를 위해 `Node.js` 버전 `14` 이상이 필요하다. 
-- 다음 명령어를 입력해 패키지를 설치한다.     
-```bash
-// {폴더 경로}/javascript-racingcar-precourse/ 에서
-npm install
-```     
-
-- 설치가 완료되었다면, 다음 명령어를 입력해 테스트를 실행한다.
-```bash
-// {폴더 경로}/javascript-racingcar-precourse/ 에서
-npm run test
-```
-
-- 아래와 같은 화면이 나오며 모든 테스트가 pass한다면 성공! 
-
-![테스트 결과](./images/test_result.png)

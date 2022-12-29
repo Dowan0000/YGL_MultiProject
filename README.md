@@ -57,8 +57,12 @@ public:
 - **프로젝트 작업시 코드 최적화와 속도를 위해 가능한 c++ 클래스로 작업을 진행한다.**
 - **AI, UMG, InterFace작업시 필요 이상으로 복잡해지는 c++클래스 대신 UMG블루프린트를 사용해 작업한다.**
 - **클래스 작업시 공통 기능을 공유하는 클래스들은 [객체지향](https://docs.unrealengine.com/4.26/ko/ProgrammingAndScripting/ClassCreation/) 으로 설계해 불필요한 코드의 낭비를 줄이면서 프로그래밍한다.**
-- **엔진과 연결되어 소통하는 로그인,회원가입,채팅 서버는 프로젝트 폴더 이외의 별도 폴더에서 작업한다.**
 - **함수(또는 메소드)가 한 가지 일만 정확하게 기능하도록 구현한다.**
+- **엔진과 연결되어 소통하는 로그인,회원가입,채팅 서버는 프로젝트 폴더 이외의 별도 폴더에서 작업한다.**
+  -  [`회원가입 서버`](https://github.com/ejong2/C_UE4_JoinServer.git)
+  -  [`로그인 서버`](https://github.com/ejong2/C_UE4_LoginServer.git)
+  -  [`채팅 서버`](https://github.com/ejong2/C_UE4_ChattingServer.git)
+
 
 <br>
 

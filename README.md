@@ -31,8 +31,6 @@ TPS장르의 멀티플레이가 가능한 팀 vs 팀 FPS 게임을 구현한다
 
 <img width="1259" alt="Untitled (2)" src="https://user-images.githubusercontent.com/106827197/209893043-d182ab50-af11-45b7-99ea-76b472d0eafc.png">
 
-![실행이미지](images/Untitled (2).png)
-
 <br>
 
 ---

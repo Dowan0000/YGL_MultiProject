@@ -35,18 +35,17 @@ TPS장르의 멀티플레이가 가능한 팀 vs 팀 FPS 게임을 구현한다
 
 ---
 ## ✅ 프로그래밍 요구사항
-- 주어진 `index.html`에 html 엘리먼트를 직접 추가하거나 기존의 html 엘리먼트를 임의로 삭제하지 않는다. id와 같은 선택자를 추가하는 작업만 가능하다.
-- 다음과 같이 Car 객체를 만들고, new 를 이용해 인스턴스를 만들어 사용한다.
-```javascript
-function Car(name) {
-  this.name = name;
-}
+- 프로젝트 인원들은 프로젝트 폴더 안에서 각자의 파일에서만 작업을 허용한다, 또한 공유 자원을 필요로 한다면 서로 소통을 통해 컨펌 이후 작업을 진행한다. 
+- 다음과 같이 c++ 클래스를 만들고, 인스턴스를 만들어 사용한다.
+```c++
+UCLASS()
+class YGL_MULTIPROJECT_API AMainCharacter : public ACharacter
+{
+	GENERATED_BODY()
 
-class Car {
-  constructor(name) {
-    this.name = name;
-  }
-}
+public:
+	AMainCharacter();
+
 ```
 
 ### 라이브러리

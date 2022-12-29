@@ -1,9 +1,9 @@
 <p align="middle" >
 
-![Untitled (1)](https://user-images.githubusercontent.com/106827197/209891837-2d6620d6-cf61-4ce3-b7e7-6ba2422765be.png)
+ <img width="200px;" ![Untitled (1)](https://user-images.githubusercontent.com/106827197/209891837-2d6620d6-cf61-4ce3-b7e7-6ba2422765be.png)
 
 </p>
-<h1 align="middle">자동차 경주 게임</h1>
+<h1 align="middle">TPS Shooting 멀티플레이 게임</h1>
 
 
 
